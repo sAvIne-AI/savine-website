@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Savine Login - Hacking the World</title>
+  <title>Savine Login - Hacker Console</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
@@ -58,7 +58,7 @@
       from { transform: translate(-50%, -50%) rotate(0deg); }
       to { transform: translate(-50%, -50%) rotate(360deg); }
     }
-    /* Desktop/terminal outline beneath form */
+    /* Desktop/terminal outline beneath form (dimmed) */
     #desktop-outline {
       position: fixed;
       bottom: 6%;
@@ -68,11 +68,12 @@
       height: 130px;
       border: 3px solid #00ff00;
       border-radius: 14px;
-      box-shadow: 0 0 18px #00ff00aa, inset 0 0 24px #00ff00cc;
-      filter: drop-shadow(0 0 10px #00ff00);
+      box-shadow: 0 0 8px #005500aa, inset 0 0 12px #008800cc;
+      filter: drop-shadow(0 0 4px #005500);
       pointer-events: none;
       user-select: none;
       z-index: 1;
+      opacity: 0.06;
     }
     /* Main login form styling */
     .login-panel {
@@ -86,7 +87,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 24px;
+      gap: 22px;
     }
     .login-panel h1 {
       margin: 0;
@@ -99,17 +100,17 @@
       user-select: none;
     }
     input[type="email"], input[type="password"] {
+      display: block;
       width: 100%;
       background: transparent;
       border: 2px solid #00ff00;
-      border-radius: 10px;
-      padding: 15px 20px;
+      border-radius: 12px;
+      padding: 14px 18px;
       font-family: 'Share Tech Mono', monospace;
       font-size: 1.15rem;
       color: #00ff00;
       outline: none;
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
-      margin-bottom: 0;
     }
     input[type="email"]:focus, input[type="password"]:focus {
       border-color: #ff00de;
@@ -129,13 +130,13 @@
       text-transform: uppercase;
       box-shadow: 0 0 38px #00ff00;
       transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-      margin-top: 10px;
+      margin-top: 6px;
     }
     button:hover, button:focus {
       background: linear-gradient(90deg, #ff00de, #aa00ff);
       color: white;
       box-shadow: 0 0 58px #ff00de;
-      transform: scale(1.06);
+      transform: scale(1.07);
       outline: none;
     }
     #userDetails {
@@ -156,9 +157,9 @@
       .login-panel h1 {
         font-size: 2.6rem;
       }
-      input[type="email"], input[type="password"], button {
+      input, button {
         font-size: 1.05rem;
-        padding: 14px 15px;
+        padding: 12px 12px;
       }
     }
   </style>
@@ -182,13 +183,7 @@
     </svg>
   </div>
 
-  <div id="desktop-outline" aria-hidden="true">
-    <svg width="270" height="130" viewBox="0 0 300 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
-      <rect x="10" y="20" width="280" height="90" rx="10" stroke="#00FF00" stroke-width="4" fill="none"/>
-      <rect x="110" y="112" width="80" height="9" fill="#00FF00" fill-opacity="0.11"/>
-      <rect x="130" y="122" width="40" height="10" rx="4" fill="#00FF00" fill-opacity="0.22"/>
-    </svg>
-  </div>
+  <div id="desktop-outline" aria-hidden="true"></div>
 
   <div class="login-panel" role="main" aria-label="Savine Login">
     <h1>SAVINE</h1>
