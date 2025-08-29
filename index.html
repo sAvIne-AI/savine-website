@@ -1,135 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SAVINE — The Underground Tech Hub</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>🦇 SAVINE — The Underground Tech Hub</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
-    body {
-      margin: 0;
-      height: 100vh;
-      background: #0a0a0a;
-      color: #00ffea;
-      font-family: 'Share Tech Mono', monospace;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-    }
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #0a0a0a 0%, #001216 100%);
+    color: #00fff7;
+    font-family: 'Share Tech Mono', monospace;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+  }
 
-    h1 {
-      font-size: 3.5rem;
-      color: #00fff7;
-      position: relative;
-      text-transform: uppercase;
+  /* Ambient flicker background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at center, rgba(0,255,255,0.08), transparent 80%);
+    animation: flickerBG 3s infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes flickerBG {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.5; }
+  }
+
+  h1 {
+    font-size: 4rem;
+    color: #00fff7;
+    position: relative;
+    text-transform: uppercase;
+    text-shadow:
+      0 0 5px #00fff7,
+      0 0 15px #00fff7,
+      0 0 30px #00fff7,
+      0 0 45px #00fff7;
+    animation: glitch 2.5s infinite linear;
+    letter-spacing: 0.25em;
+    z-index: 2;
+  }
+
+  @keyframes glitch {
+    0%, 100% {
       text-shadow:
         0 0 5px #00fff7,
-        0 0 10px #00fff7,
-        0 0 20px #00fff7,
-        0 0 40px #00fff7;
-      animation: glitch 2s infinite;
-      letter-spacing: 0.2em;
-    }
-
-    @keyframes glitch {
-      0%, 100% {
-        text-shadow:
-          0 0 5px #00fff7,
-          0 0 10px #00fff7,
-          0 0 20px #00fff7,
-          0 0 40px #00fff7;
-      }
-      20% {
-        text-shadow:
-          2px 0 red,
-          -2px 0 cyan,
-          3px 2px blue;
-      }
-      40% {
-        text-shadow:
-          -2px 0 #ff00de,
-          2px 0 cyan,
-          -3px 2px #00eaff;
-      }
-      60% {
-        text-shadow:
-          2px 2px #fffb00,
-          -2px -2px #00fff7;
-      }
-      80% {
-        text-shadow:
-          -1px 1px cyan,
-          1px -1px #00fff7;
-      }
-    }
-
-    .typing-container {
-      font-size: 1.25rem;
-      margin-top: 20px;
-      max-width: 600px;
-      text-align: center;
-      min-height: 3em;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 3px solid #00fff7;
-      animation: blink-caret 0.75s step-end infinite;
-    }
-
-    @keyframes blink-caret {
-      from, to { border-color: transparent; }
-      50% { border-color: #00fff7; }
-    }
-
-    a.enter-button {
-      margin-top: 40px;
-      font-size: 1.3rem;
-      padding: 15px 40px;
-      border: 2px solid #00fff7;
-      color: #00fff7;
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      border-radius: 30px;
-      box-shadow: 0 0 10px #00fff7;
-      transition: 0.3s ease;
-    }
-
-    a.enter-button:hover {
-      background: #00fff7;
-      color: #0a0a0a;
-      box-shadow:
-        0 0 20px #00fff7,
+        0 0 15px #00fff7,
         0 0 30px #00fff7,
-        0 0 40px #00fff7;
+        0 0 45px #00fff7;
     }
+    20% {
+      text-shadow:
+        2px 0 red,
+        -2px 0 cyan,
+        3px 2px blue;
+    }
+    40% {
+      text-shadow:
+        -2px 0 #ff00de,
+        2px 0 cyan,
+        -3px 2px #00eaff;
+    }
+    60% {
+      text-shadow:
+        2px 2px #fffb00,
+        -2px -2px #00fff7;
+    }
+    80% {
+      text-shadow:
+        -1px 1px cyan,
+        1px -1px #00fff7;
+    }
+  }
 
-    /* Subtle background flicker */
-    @keyframes flicker {
-      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-        opacity: 1;
-      }
-      20%, 22%, 24%, 55% {
-        opacity: 0.5;
-      }
-    }
+  .typing-container {
+    font-size: 1.3rem;
+    margin-top: 25px;
+    max-width: 650px;
+    text-align: center;
+    min-height: 3em;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid #00fff7;
+    animation: blink-caret 0.8s step-end infinite;
+    z-index: 2;
+  }
 
-    body {
-      animation: flicker 3s infinite;
-    }
-  </style>
+  @keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: #00fff7; }
+  }
+
+  a.enter-button {
+    margin-top: 45px;
+    font-size: 1.4rem;
+    padding: 16px 50px;
+    border: 2px solid #00fff7;
+    color: #00fff7;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border-radius: 35px;
+    box-shadow:
+      0 0 15px #00fff7,
+      0 0 30px #00fff7;
+    transition: 0.4s ease;
+    z-index: 2;
+  }
+
+  a.enter-button:hover {
+    background: #00fff7;
+    color: #0a0a0a;
+    box-shadow:
+      0 0 35px #00fff7,
+      0 0 50px #00fff7,
+      0 0 70px #00fff7;
+    transform: scale(1.05);
+  }
+
+</style>
 </head>
 <body>
 
   <h1>🦇 SAVINE</h1>
   <div id="typing" class="typing-container"></div>
-
   <a href="bunker.html" class="enter-button">Enter the Bunker</a>
 
   <script>
-    // Typed text animation for descriptive lines
     const textArray = [
       "Welcome to your underground tech hub.",
       "Private tech help, hacker-vibes, chatbot.",
@@ -168,6 +176,6 @@
       if(textArray.length) setTimeout(type, newTextDelay + 250);
     });
   </script>
-
+  
 </body>
 </html>
