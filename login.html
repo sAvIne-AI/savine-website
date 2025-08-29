@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SAVINE Login - Neon Hacker Portal</title>
+  <title>SAVINE Login - Neon Portal</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
     html, body {
@@ -20,97 +20,98 @@
       pointer-events: none;
     }
     .login-box {
-      position: relative;
-      margin: 8vh auto 0 auto;
+      margin: 7vh auto 0 auto;
       width: 375px;
-      max-width: 94vw;
-      background: rgba(10,15,10,0.95);
-      border-radius: 22px;
+      max-width: 95vw;
+      background: rgba(10,15,10,0.93);
+      border-radius: 26px;
       border: 2.5px solid #00ff00;
-      box-shadow: 0 0 32px #00ff0060, 0 0 10px #99ff99;
-      padding: 38px 30px 44px 30px;
+      box-shadow: 0 0 36px #00ff0060, 0 0 10px #99ff99;
+      padding: 38px 24px 40px 24px;
       z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 32px;
+      gap: 28px;
     }
     .login-box h1 {
       color: #00ff00;
-      font-size: 2.8rem;
-      margin: 0 0 20px 0;
+      font-size: 2.7rem;
+      margin: 0 0 16px 0;
       text-align: center;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.17em;
       font-family: 'Share Tech Mono', monospace;
-      text-shadow: 0 0 15px #00ff00, 0 0 70px #00ff00aa;
+      text-shadow: 0 0 15px #00ff00, 0 0 60px #00ff00aa;
       font-weight: bold;
     }
     .form-fields {
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 23px;
-      margin-bottom: 8px;
+      gap: 22px;
+      margin-bottom: 4px;
     }
     .glow-input {
       width: 100%;
-      background: rgba(10,15,10,0.7);
+      background: rgba(10,15,10,0.8);
       color: #dbffe4;
       border: 2px solid #19ff79;
-      border-radius: 14px;
+      border-radius: 12px;
       font-family: 'Share Tech Mono', monospace;
-      font-size: 1.15rem;
-      padding: 15px 18px;
+      font-size: 1.11rem;
+      padding: 13px 16px;
       outline: none;
       text-align: left;
       letter-spacing: 0.07em;
       transition: border-color 0.2s, box-shadow 0.23s;
-      box-shadow: 0 0 8px #00ff28 inset, 0 0 0 #0000;
+      box-shadow: 0 0 6px #00ff28 inset;
     }
     .glow-input:focus {
       border-color: #fff28f;
-      box-shadow: 0 0 15px #ffee50, 0 0 22px #00ff00;
-      color: #fff6d3;
+      box-shadow: 0 0 13px #ffee50, 0 0 17px #00ff00;
+      color: #fff7da;
     }
     .glow-btn {
-      width: 100%;
-      margin-top: 6px;
+      width: 80%;
+      margin: 12px auto 0 auto;
       background: #0dff6e;
-      color: #003110;
+      color: #003400;
       border: none;
-      border-radius: 12px;
+      border-radius: 11px;
       font-family: 'Share Tech Mono', monospace;
-      font-size: 1.25rem;
+      font-size: 1.03rem;
       font-weight: bold;
       text-transform: uppercase;
-      padding: 17px 0;
-      box-shadow: 0 0 19px #0dff6e, 0 0 35px #02ff0a90;
-      letter-spacing: 0.09em;
+      padding: 11px 0;
+      box-shadow: 0 0 15px #0dff6e, 0 0 22px #02ff0a80;
+      letter-spacing: 0.07em;
       cursor: pointer;
-      transition: background 0.2s, color 0.18s, box-shadow 0.23s, transform 0.18s;
-      text-shadow: 0 0 4px #00ff00;
+      transition: background 0.16s, color 0.16s, box-shadow 0.17s, transform 0.13s;
+      text-shadow: 0 0 3px #00ff00;
+      display: block;
     }
     .glow-btn:hover, .glow-btn:focus {
       background: #101;
       color: #0dff6e;
       border: 2px solid #02ff0a;
-      box-shadow: 0 0 45px #00ff00, 0 0 88px #0dff6e;
+      box-shadow: 0 0 29px #00ff00, 0 0 62px #0dff6e;
       outline: none;
-      transform: scale(1.045);
+      transform: scale(1.04);
     }
     #userDetails {
       width: 100%;
       text-align: center;
-      min-height: 1.7em;
-      color: #00ff84;
+      min-height: 1.65em;
+      color: #00ff88;
       font-size: 1.08rem;
       font-weight: 700;
       letter-spacing: 0.06em;
       margin-top: 4px;
     }
-    @media (max-width: 480px) {
-      .login-box { padding: 28px 5vw 36px 5vw; }
-      .login-box h1 { font-size: 2.0rem; }
+    @media (max-width: 520px) {
+      .login-box { padding: 19px 5vw 24px 5vw; }
+      .login-box h1 { font-size: 2.05rem; }
+      .glow-btn { font-size: 0.97rem; }
     }
   </style>
 </head>
@@ -125,13 +126,13 @@
       </div>
       <button type="submit" class="glow-btn">LOGIN / SIGN UP</button>
     </form>
-    <button id="logoutBtn" style="display:none;margin-top:10px;" class="glow-btn">Logout</button>
+    <button id="logoutBtn" style="display:none;margin-top:8px;" class="glow-btn">Logout</button>
     <div id="userDetails"></div>
   </section>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script>
-    // Firebase config: INSERT YOUR PROJECT INFO BELOW!
+    // Firebase: replace with your actual project info
    const firebaseConfig = {
       apiKey: "AIzaSyDhVEriajG4wXV7nr5v7eQMM-C5QPy7e0A",
       authDomain: "savine-2898.firebaseapp.com",
@@ -199,7 +200,7 @@
       }
     });
 
-    // Matrix Rain
+    // Matrix effect
     const canvas = document.getElementById('matrix-bg');
     const ctx = canvas.getContext('2d');
     let width = window.innerWidth;
@@ -223,13 +224,11 @@
         drops[i]++;
       }
     }
-
     function animate() {
       draw();
       requestAnimationFrame(animate);
     }
     animate();
-
     window.addEventListener('resize', () => {
       width = window.innerWidth; height = window.innerHeight;
       canvas.width = width; canvas.height = height;
