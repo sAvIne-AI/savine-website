@@ -1,178 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>🦇 The Bunker - Savine</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🦇 SAVINE Bunker — Dashboard</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
-  body {
-    margin: 0;
-    height: 100vh;
-    background: radial-gradient(circle at center, #001111, #000000);
-    font-family: 'Share Tech Mono', monospace;
-    color: #00ffbb;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    overflow: hidden;
-    position: relative;
-  }
-
-  /* Ambient scan lines */
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    pointer-events: none;
-    background: repeating-linear-gradient(
-      0deg, rgba(0,255,187,0.05) 0px, rgba(0,255,187,0.05) 2px,
-      transparent 2px, transparent 4px
-    );
-    animation: flickerBG 4s infinite alternate;
-    z-index: 0;
-  }
-
-  @keyframes flickerBG {
-    0%, 100% { opacity: 0.1; }
-    50% { opacity: 0.4; }
-  }
-
-  h1 {
-    color: #00ffc8;
-    font-size: 4rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    text-shadow:
-      0 0 10px #00ffc8,
-      0 0 30px #00ffc8,
-      0 0 40px #00ffc8,
-      0 0 60px #00ffc8;
-    animation: glitchBunker 2s infinite ease-in-out alternate;
-    margin: 0 0 1em;
-    z-index: 2;
-  }
-
-  @keyframes glitchBunker {
-    0%, 100% {
-      text-shadow:
-        0 0 10px #00ffc8,
-        0 0 30px #00ffc8,
-        0 0 40px #00ffc8,
-        0 0 60px #00ffc8;
+    html,body {
+      margin:0; padding:0;
+      background: #00010a;
+      font-family: 'Share Tech Mono', monospace;
+      color: #00fff7;
+      height: 100%;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    20% {
-      text-shadow:
-        3px 0 #ff3399,
-        -3px 0 #00ffee,
-        4px 2px #ff3399;
+
+    header {
+      width: 100%;
+      padding: 20px 40px;
+      border-bottom: 1px solid #006060;
+      font-size: 2rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-shadow: 0 0 8px #00fff7;
+      box-shadow:
+        0 0 15px rgba(0,255,255,0.3);
+      user-select: none;
     }
-    40% {
-      text-shadow:
-        -3px 0 #00ffee,
-        3px 0 #ff3399,
-        -4px 2px #00ffff;
+
+    main {
+      flex: 1;
+      width: 90vw;
+      max-width: 1200px;
+      padding: 40px 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+      gap: 24px;
+      z-index: 1;
     }
-    60% {
-      text-shadow:
-        3px 3px #ff3399,
-        -3px -3px #00ffc8;
+
+    .card {
+      background: #001e22;
+      border-radius: 12px;
+      padding: 25px 20px;
+      box-shadow:
+        0 0 20px #00fff7a0,
+        inset 0 0 20px #005555AA;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
     }
-    80% {
-      text-shadow:
-        -1px 1px #00ffcc,
-        1px -1px #00ffbb;
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300%;
+      height: 200%;
+      background:
+        repeating-radial-gradient(circle,rgba(0,255,255,0.15) 0 20px,transparent 21px 30px);
+      transform: translate(-50%, -50%) rotate(25deg);
+      transition: opacity 0.3s ease;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
     }
-  }
 
-  .typing-text {
-    font-size: 1.5rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-align: center;
-    border-right: 3px solid #00ffbb;
-    max-width: 80vw;
-    animation: blinkCaret 0.8s steps(40, end) infinite;
-    z-index: 2;
-    margin: 0 auto;
-  }
+    .card:hover::before {
+      opacity: 1;
+    }
 
-  @keyframes blinkCaret {
-    0%, 100% { border-color: transparent; }
-    50% { border-color: #00ffbb; }
-  }
+    .card:hover {
+      box-shadow:
+        0 0 40px #00ffe8,
+        inset 0 0 40px #00ffe8;
+      transform: scale(1.05);
+      background: #003739;
+      z-index: 10;
+    }
 
-  a.back-link {
-    margin-top: 40px;
-    padding: 14px 46px;
-    background-color: #00ffbb;
-    border-radius: 50px;
-    font-weight: 700;
-    color: #000a0a;
-    text-decoration: none;
-    font-size: 1.3rem;
-    box-shadow:
-      0 0 30px #00ffbb,
-      0 0 50px #00ffbb;
-    transition: all 0.3s ease;
-    z-index: 3;
-  }
+    .card h2 {
+      margin: 0 0 15px 0;
+      font-size: 1.7rem;
+      letter-spacing: 0.1em;
+      color: #00fff7;
+      text-shadow: 0 0 10px #00fff7;
+      z-index: 1;
+      position: relative;
+    }
 
-  a.back-link:hover {
-    background-color: #00996e;
-    color: white;
-    box-shadow:
-      0 0 50px #00ffbb,
-      0 0 70px #00ffbb;
-  }
+    .card p {
+      font-size: 1.1rem;
+      line-height: 1.4;
+      color: #00d1b8;
+      z-index: 1;
+      position: relative;
+    }
 
-</style>
+    footer {
+      width: 100%;
+      padding: 15px 0;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #005050;
+      user-select: none;
+      background: #001118;
+      box-shadow: inset 0 1px 5px #004040;
+      letter-spacing: 0.1em;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Welcome to the Bunker</h1>
-  <div class="typing-text" id="typing"></div>
-  <a href="index.html" class="back-link">⬅ Return to Main</a>
 
-  <script>
-    const messages = [
-      "You've entered the underground tech hub. 🕶️",
-      "Here you'll get secret updates, Savine Coins, and private AI tools.",
-      "Stay sharp, operative."
-    ];
-    const typingElement = document.getElementById('typing');
-    let msgIndex = 0,
-        charIndex = 0,
-        typingSpeed = 80,
-        erasingSpeed = 40,
-        pauseTime = 2000;
+  <header>🦇 SAVINE BUNKER</header>
 
-    function typeText() {
-      if (charIndex < messages[msgIndex].length) {
-        typingElement.textContent += messages[msgIndex].charAt(charIndex);
-        charIndex++;
-        setTimeout(typeText, typingSpeed);
-      } else {
-        setTimeout(eraseText, pauseTime);
-      }
-    }
+  <main>
+    <div class="card" tabindex="0" role="button" aria-pressed="false">
+      <h2>Projects</h2>
+      <p>Manage your secret tech projects and missions.</p>
+    </div>
+    <div class="card" tabindex="0" role="button" aria-pressed="false">
+      <h2>Tools</h2>
+      <p>Access your exclusive digital tools and scripts.</p>
+    </div>
+    <div class="card" tabindex="0" role="button" aria-pressed="false">
+      <h2>Private AI</h2>
+      <p>Interact with your AI assistant and chatbot.</p>
+    </div>
+    <div class="card" tabindex="0" role="button" aria-pressed="false">
+      <h2>Settings</h2>
+      <p>Configure your underground system preferences.</p>
+    </div>
+  </main>
 
-    function eraseText() {
-      if (charIndex > 0) {
-        typingElement.textContent = messages[msgIndex].substring(0, charIndex - 1);
-        charIndex--;
-        setTimeout(eraseText, erasingSpeed);
-      } else {
-        msgIndex++;
-        if (msgIndex >= messages.length) msgIndex = 0;
-        setTimeout(typeText, typingSpeed + 1200);
-      }
-    }
+  <footer>© 2025 Savine - The Underground Tech Hub</footer>
 
-    document.addEventListener('DOMContentLoaded', () => {
-      if (messages.length) setTimeout(typeText, 500);
-    });
-  </script>
 </body>
 </html>
