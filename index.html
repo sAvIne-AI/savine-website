@@ -7,39 +7,50 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
-    /* Reset & base */
-    * {
-      box-sizing: border-box;
-    }
     body, html {
       margin: 0;
-      padding: 0;
       height: 100%;
-      background: #000000;
       font-family: 'Share Tech Mono', monospace;
-      overflow: hidden;
       color: #00fff7;
+      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
       position: relative;
+      background: linear-gradient(135deg, #000000, #011218);
     }
 
-    /* Animated grid background */
-    #bgCanvas {
+    /* Vertical scan lines */
+    body::before {
+      content: "";
       position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      z-index: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        rgba(0,255,255,0.08),
+        rgba(0,255,255,0.08) 2px,
+        transparent 2px,
+        transparent 6px
+      );
+      animation: scanLines 4s linear infinite;
       pointer-events: none;
-      background: linear-gradient(135deg, #000000, #111820);
+      z-index: 0;
     }
 
-    /* Title */
+    @keyframes scanLines {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 100% 0;
+      }
+    }
+
     h1 {
       font-size: 5rem;
-      text-transform: uppercase;
       letter-spacing: 0.3em;
+      text-transform: uppercase;
       text-shadow:
         0 0 15px #00fff7,
         0 0 40px #00fff7,
@@ -59,7 +70,6 @@
       }
     }
 
-    /* Neon button */
     a.enter-button {
       margin-top: 50px;
       padding: 20px 60px;
@@ -93,77 +103,8 @@
 </head>
 <body>
 
-  <canvas id="bgCanvas"></canvas>
-
   <h1>🦇 SAVINE</h1>
   <a href="bunker.html" class="enter-button" tabindex="1">Enter the Bunker</a>
-
-<script>
-  // Animated grid lines on black background
-  const canvas = document.getElementById('bgCanvas');
-  const ctx = canvas.getContext('2d');
-  let w, h;
-  const gridSpacing = 30;
-  const lines = [];
-
-  function resize() {
-    w = window.innerWidth;
-    h = window.innerHeight;
-    canvas.width = w;
-    canvas.height = h;
-  }
-
-  class Line {
-    constructor(x1, y1, x2, y2, delay) {
-      this.x1 = x1; this.y1 = y1; this.x2 = x2; this.y2 = y2;
-      this.alpha = 0;
-      this.delay = delay;
-      this.speed = 0.007;
-    }
-    update() {
-      if(this.alpha < 1) {
-        if(this.delay > 0) this.delay--;
-        else this.alpha += this.speed;
-      }
-    }
-    draw() {
-      ctx.strokeStyle = `rgba(0,255,255,${this.alpha})`;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(this.x1, this.y1);
-      ctx.lineTo(this.x2, this.y2);
-      ctx.stroke();
-    }
-  }
-
-  function createGridLines() {
-    lines.length = 0;
-    for(let x=0; x<=w; x += gridSpacing){
-      lines.push(new Line(x,0,x,h,Math.floor(Math.random()*200)));
-    }
-    for(let y=0; y<=h; y += gridSpacing){
-      lines.push(new Line(0,y,w,y,Math.floor(Math.random()*200)));
-    }
-  }
-
-  function animate() {
-    ctx.clearRect(0,0,w,h);
-    lines.forEach(line => {
-      line.update();
-      line.draw();
-    });
-    requestAnimationFrame(animate);
-  }
-
-  window.addEventListener('resize', () => {
-    resize();
-    createGridLines();
-  });
-
-  resize();
-  createGridLines();
-  animate();
-</script>
 
 </body>
 </html>
