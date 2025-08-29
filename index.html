@@ -1,320 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>🦇 SAVINE — Tech Hub Portal</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-
-  body, html {
-    margin: 0; padding: 0; height: 100%;
-    overflow: hidden;
-    background: #000010;
-    font-family: 'Orbitron', monospace;
-    color: #00ffff;
-    position: relative;
-  }
-
-  canvas#background {
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    z-index: 0;
-    background: linear-gradient(to bottom, #000011, #000000);
-  }
-
-  #bat-swoop-canvas {
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    pointer-events: none;
-    z-index: 10;
-  }
-
-  /* Skyline stylized */
-  #city-skyline {
-    position: fixed;
-    bottom: 0; left: 0; width: 100%;
-    height: 25vh;
-    background: linear-gradient(to top, #001022, transparent);
-    box-shadow: inset 0 10px 40px #001a33;
-    z-index: 2;
-  }
-
-  /* Bat symbol in sky */
-  #bat-symbol {
-    position: fixed;
-    top: 10vh;
-    right: 5vw;
-    width: 120px;
-    height: 120px;
-    opacity: 0.12;
-    filter: drop-shadow(0 0 6px cyan);
-    z-index: 2;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  /* Centered content */
-  #container {
-    position: relative;
-    z-index: 5;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 3rem;
-    padding: 0 1rem;
-  }
-
-  h1 {
-    font-size: 5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.3em;
-    color: #00ffff;
-    text-shadow:
-      0 0 20px #00ffff,
-      0 0 40px #00ffff,
-      0 0 80px #00ffff;
-    user-select: none;
-  }
-
-  button#enter-bunker {
-    font-family: 'Orbitron', monospace;
-    background: linear-gradient(90deg, #00ffff, #002244);
-    border: none;
-    padding: 20px 60px;
-    border-radius: 50px;
-    font-weight: 700;
-    color: #000011;
-    font-size: 1.7rem;
-    cursor: pointer;
-    box-shadow:
-      0 0 30px #00ffff,
-      inset 0 0 35px #00ffff;
-    transition: all 0.4s ease;
-  }
-
-  button#enter-bunker:hover {
-    background: linear-gradient(90deg, #002244, #00ffff);
-    color: #0ff;
-    box-shadow: 0 0 50px #00ffff, 0 0 100px #00ffff;
-    transform: scale(1.1);
-  }
-
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SAVINE — Tech Hub Portal</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+    body, html {
+      margin: 0; padding: 0; height: 100%;
+      font-family: 'Share Tech Mono', monospace;
+      background: #000 url('https://www.transparenttextures.com/patterns/dark-mosaic.png') repeat;
+      color: #00FF00;
+      overflow: hidden;
+    }
+    .matrix-bg {
+      position: fixed; top: 0; left: 0; z-index: 0;
+      width: 100vw; height: 100vh;
+    }
+    .portal-panel {
+      position: relative; top: 16vh; left: 8vw;
+      max-width: 560px;
+      background: rgba(0,0,0,0.92);
+      border: 2px solid #00FF00;
+      box-shadow: 0 0 30px #00FF0040, 0 0 3px #00FF00;
+      border-radius: 6px;
+      padding: 30px 36px 32px 36px;
+      z-index: 2;
+    }
+    .panel-header {
+      background: #00FF00;
+      color: #000;
+      font-family: inherit;
+      letter-spacing: .06em;
+      font-size: 1.5rem;
+      border-radius: 3px 3px 0 0;
+      padding: 10px 24px;
+      margin: -30px -36px 22px -36px;
+      box-shadow: 0 2px 5px #00FF0060;
+    }
+    h1 {
+      font-size: 2.6rem;
+      text-align: center;
+      margin: 0 0 12px 0;
+      font-family: 'Share Tech Mono', monospace;
+      color: #00FF00;
+      text-shadow: 0 0 7px #00FF00, 0 0 12px #00ff0060;
+      letter-spacing: 0.07em;
+    }
+    button {
+      font-family: 'Share Tech Mono', monospace;
+      background: #00FF00;
+      color: #000;
+      border: none;
+      border-radius: 5px;
+      padding: 14px 44px;
+      font-size: 1.3rem;
+      margin-top: 20px;
+      font-weight: bold;
+      box-shadow: 0 4px 20px #00FF0060;
+      transition: 0.13s;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #000;
+      color: #00FF00;
+      border: 2px solid #00FF00;
+      box-shadow: 0 0 22px #00FF00;
+      transform: scale(1.07);
+    }
+  </style>
 </head>
 <body>
+  <canvas class="matrix-bg"></canvas>
+  <div class="portal-panel">
+    <div class="panel-header">Program Console</div>
+    <h1>🦇 SAVINE</h1>
+    <button onclick="window.location='bunker.html'">Enter the Bunker</button>
+  </div>
+  <script>
+    // Matrix code rain
+    const canvas = document.querySelector('.matrix-bg');
+    const ctx = canvas.getContext('2d');
+    let w = window.innerWidth;
+    let h = window.innerHeight;
+    canvas.width = w; canvas.height = h;
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789₿ΞΦΨ₪₵₣₭₮₦₢₠Ƀ¥$#%@*&";
+    const fontSize = 22;
+    const columns = Math.floor(w / fontSize);
+    const drops = Array(columns).fill(1);
 
-<canvas id="background"></canvas>
-<canvas id="bat-swoop-canvas"></canvas>
-
-<!-- City skyline silhouette -->
-<div id="city-skyline"></div>
-
-<!-- Bat symbol faint in sky -->
-<svg id="bat-symbol" viewBox="0 0 64 64" fill="none" stroke="cyan" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <path d="M32 12L26 24L16 26L24 30L14 34L24 38L16 42L26 46L32 58L38 46L48 42L40 38L50 34L40 30L48 26L38 24L32 12Z"/>
-</svg>
-
-<div id="container" role="main">
-  <h1>🦇 SAVINE</h1>
-  <button id="enter-bunker" aria-label="Enter the Bunker">Enter the Bunker</button>
-</div>
-
-<script>
-  const bgCanvas = document.getElementById('background');
-  const bgCtx = bgCanvas.getContext('2d');
-  const batCanvas = document.getElementById('bat-swoop-canvas');
-  const batCtx = batCanvas.getContext('2d');
-
-  // Resize canvases
-  function resize() {
-    bgCanvas.width = window.innerWidth;
-    bgCanvas.height = window.innerHeight;
-    batCanvas.width = window.innerWidth;
-    batCanvas.height = window.innerHeight;
-  }
-  window.addEventListener('resize', resize);
-  resize();
-
-  // Lightning effect
-  let lightningAlpha = 0;
-  function drawLightning() {
-    const w = bgCanvas.width;
-    const h = bgCanvas.height;
-    bgCtx.clearRect(0, 0, w, h);
-
-    // Dark blue gradient background
-    let gradient = bgCtx.createLinearGradient(0, 0, 0, h);
-    gradient.addColorStop(0, '#000011');
-    gradient.addColorStop(1, '#000005');
-    bgCtx.fillStyle = gradient;
-    bgCtx.fillRect(0, 0, w, h);
-
-    // Draw lightning flicker flash
-    if (lightningAlpha > 0) {
-      bgCtx.fillStyle = `rgba(180, 220, 255, ${lightningAlpha})`;
-      bgCtx.fillRect(0, 0, w, h);
-      lightningAlpha -= 0.02;
-    }
-  }
-  function triggerLightning() {
-    lightningAlpha = 0.4 + Math.random() * 0.25;
-  }
-
-  // Clouds - layers of translucent white blobs moving
-  let clouds = [];
-  class Cloud {
-    constructor() {
-      this.x = Math.random() * bgCanvas.width;
-      this.y = 40 + Math.random() * 40;
-      this.size = 70 + Math.random() * 50;
-      this.speed = 0.2 + Math.random() * 0.2;
-      this.alpha = 0.12 + Math.random() * 0.08;
-    }
-    update() {
-      this.x += this.speed;
-      if (this.x - this.size > bgCanvas.width) this.x = -this.size;
-    }
-    draw() {
-      bgCtx.beginPath();
-      let gradient = bgCtx.createRadialGradient(this.x, this.y, this.size*0.3, this.x, this.y, this.size);
-      gradient.addColorStop(0, `rgba(255,255,255,${this.alpha})`);
-      gradient.addColorStop(1, 'rgba(255,255,255,0)');
-      bgCtx.fillStyle = gradient;
-      bgCtx.arc(this.x, this.y, this.size, 0, Math.PI*2);
-      bgCtx.fill();
-    }
-  }
-
-  // Initialize clouds
-  for(let i=0;i<8;i++) {
-    clouds.push(new Cloud());
-  }
-
-  // Flying bats - small silhouettes moving randomly
-  const batShape = new Path2D("M32 12L26 24L16 26L24 30L14 34L24 38L16 42L26 46L32 58L38 46L48 42L40 38L50 34L40 30L48 26L38 24L32 12Z");
-  class FlyBat {
-    constructor() {
-      this.x = Math.random()*bgCanvas.width;
-      this.y = 50 + Math.random()*100;
-      this.size = 15 + Math.random()*20;
-      this.speedX = 0.5 + Math.random();
-      this.speedY = (Math.random()-0.5)*0.8;
-      this.angle = 0;
-      this.angleSpeed = (Math.random()-0.5)*0.04;
-      this.opacity = 0.08 + Math.random()*0.12;
-    }
-    update() {
-      this.x += this.speedX;
-      this.y += this.speedY;
-      if (this.x > bgCanvas.width + this.size) this.x = -this.size;
-      if(this.y > 180 || this.y < 0) this.speedY *= -1;
-      this.angle += this.angleSpeed;
-    }
-    draw() {
-      bgCtx.save();
-      bgCtx.translate(this.x, this.y);
-      bgCtx.rotate(this.angle);
-      bgCtx.scale(this.size/32, this.size/32);
-      bgCtx.globalAlpha = this.opacity;
-      bgCtx.strokeStyle = 'cyan';
-      bgCtx.lineWidth = 1.5;
-      bgCtx.shadowColor = 'cyan';
-      bgCtx.shadowBlur = 8;
-      bgCtx.stroke(batShape);
-      bgCtx.restore();
-      bgCtx.globalAlpha = 1.0;
-    }
-  }
-  let flyingBats=[];
-  for(let i=0;i<12;i++) flyingBats.push(new FlyBat());
-
-  // Animate background
-  function bgAnimate() {
-    drawLightning();
-    clouds.forEach(c => {
-      c.update();
-      c.draw();
-    });
-    flyingBats.forEach(b => {
-      b.update();
-      b.draw();
-    });
-    requestAnimationFrame(bgAnimate);
-  }
-
-  // Random lightning trigger every 4-10s
-  setInterval(triggerLightning, 4000 + Math.random()*6000);
-  bgAnimate();
-
-  // Bat swoop animation on button click and navigate to bunker.html
-  const enterButton = document.getElementById('enter-bunker');
-  const batCanvasRect = batCanvas.getBoundingClientRect();
-
-  class SwoopBat {
-    constructor() {
-      this.x = -80;
-      this.y = 150;
-      this.size = 40;
-      this.progress = 0;
-      this.path = null;
-      this.isAttacking = false;
-    }
-    start(target) {
-      this.isAttacking = true;
-      // Path: from left bottom to target button smoothly
-      this.path = {
-        startX: this.x,
-        startY: this.y,
-        endX: target.left + target.width/2,
-        endY: target.top + target.height/2,
-      };
-      this.progress = 0;
-    }
-    update() {
-      if (!this.isAttacking) return;
-      this.progress += 0.015;
-      if (this.progress > 1) {
-        this.isAttacking = false;
-        // Trigger navigation after swoop
-        window.location.href = 'bunker.html';
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0,0,0,0.15)";
+      ctx.fillRect(0, 0, w, h);
+      ctx.font = fontSize + "px 'Share Tech Mono', monospace";
+      ctx.fillStyle = "#00FF00";
+      for(let i = 0; i < drops.length; i++) {
+        const text = chars[ Math.floor(Math.random()*chars.length) ];
+        ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+        drops[i] = (drops[i] * fontSize > h && Math.random()>0.975) ? 0 : drops[i]+1;
       }
     }
-    draw() {
-      if (!this.isAttacking) return;
-      const x = this.path.startX + (this.path.endX - this.path.startX) * this.progress;
-      const y = this.path.startY + (this.path.endY - this.path.startY) * (Math.sin(this.progress * Math.PI * 3) * 40);
-      batCtx.clearRect(0, 0, batCanvas.width, batCanvas.height);
-      batCtx.save();
-      batCtx.translate(x, y);
-      batCtx.scale(this.size / 32, this.size / 32);
-      batCtx.strokeStyle = '#00ffff';
-      batCtx.lineWidth = 2;
-      batCtx.shadowColor = '#00ffff';
-      batCtx.shadowBlur = 15;
-      batCtx.stroke(batShape);
-      batCtx.restore();
-    }
-  }
-
-  const swoopBat = new SwoopBat();
-
-  enterButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    const rect = enterButton.getBoundingClientRect();
-    swoopBat.start(rect);
-  });
-
-  function animateSwoop() {
-    batCtx.clearRect(0, 0, batCanvas.width, batCanvas.height);
-    swoopBat.update();
-    swoopBat.draw();
-    requestAnimationFrame(animateSwoop);
-  }
-  animateSwoop();
-</script>
-
+    setInterval(drawMatrix, 60);
+    window.onresize = () => {
+      w = window.innerWidth; h = window.innerHeight;
+      canvas.width = w; canvas.height = h;
+    };
+  </script>
 </body>
 </html>
