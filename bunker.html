@@ -1,117 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>🦇 The Bunker - Savine</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>🦇 The Bunker - Savine</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
-    body {
-      background: #000a0a;
-      font-family: 'Share Tech Mono', monospace;
-      color: #00ffbb;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      overflow: hidden;
-    }
+  body {
+    background: radial-gradient(circle at center, #001210, #000000);
+    font-family: 'Share Tech Mono', monospace;
+    color: #00ffbb;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+  }
 
-    h1 {
-      font-size: 3.5rem;
-      margin-bottom: 1rem;
-      color: #00ffc8;
-      text-shadow:
+  /* Subtle glitch flicker */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    background:
+      repeating-linear-gradient(
+        45deg,
+        rgba(0,255,187,0.05),
+        rgba(0,255,187,0.05) 2px,
+        transparent 2px,
+        transparent 4px
+      );
+    animation: flickerBG 4s infinite alternate;
+    z-index: 0;
+  }
+
+  @keyframes flickerBG {
+    0%, 100% { opacity: 0.15; }
+    50% { opacity: 0.5; }
+  }
+
+  h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    color: #00ffc8;
+    text-shadow:
+      0 0 10px #00ffc8,
+      0 0 25px #00ffc8,
+      0 0 35px #00ffc8,
+      0 0 50px #00ffc8;
+    animation: glitchBunker 2.5s infinite;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    z-index: 1;
+  }
+
+  @keyframes glitchBunker {
+    0%, 100% {
+      text-shadow: 
         0 0 10px #00ffc8,
-        0 0 20px #00ffc8,
-        0 0 30px #00ffc8,
-        0 0 40px #00ffc8;
-      animation: glitchBunker 2s infinite;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
+        0 0 25px #00ffc8,
+        0 0 35px #00ffc8,
+        0 0 50px #00ffc8;
     }
+    20% {
+      text-shadow: 
+        2px 0 #ff004f,
+        -2px 0 #00fff8,
+        3px 2px #ff0051;
+    }
+    40% {
+      text-shadow: 
+        -2px 0 #00fff3,
+        2px 0 #ff0066,
+        -3px 2px #00ffe0;
+    }
+    60% {
+      text-shadow: 
+        2px 2px #ff00ff,
+        -2px -2px #00ffc8;
+    }
+    80% {
+      text-shadow: 
+        -1px 1px #00fff7,
+        1px -1px #00ffcc;
+    }
+  }
 
-    @keyframes glitchBunker {
-      0%, 100% {
-        text-shadow:
-          0 0 10px #00ffc8,
-          0 0 20px #00ffc8,
-          0 0 30px #00ffc8,
-          0 0 40px #00ffc8;
-      }
-      20% {
-        text-shadow:
-          2px 0 #ff004f,
-          -2px 0 #00fff8,
-          3px 2px #ff0051;
-      }
-      40% {
-        text-shadow:
-          -2px 0 #00fff3,
-          2px 0 #ff0066,
-          -3px 2px #00ffe0;
-      }
-      60% {
-        text-shadow:
-          2px 2px #ff00ff,
-          -2px -2px #00ffc8;
-      }
-      80% {
-        text-shadow:
-          -1px 1px #00fff7,
-          1px -1px #00ffcc;
-      }
-    }
+  .typing-text {
+    font-size: 1.4rem;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid #00ffbb;
+    max-width: 80vw;
+    margin: auto;
+    animation: blinkCaret 0.9s step-end infinite;
+    z-index: 2;
+  }
 
-    .typing-text {
-      font-size: 1.3rem;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 3px solid #00ffbb;
-      max-width: 75vw;
-      margin: auto;
-      animation: blinkCaret 0.8s step-end infinite;
-    }
+  @keyframes blinkCaret {
+    0%, 100% { border-color: transparent; }
+    50% { border-color: #00ffbb; }
+  }
 
-    @keyframes blinkCaret {
-      0%, 100% {
-        border-color: transparent;
-      }
-      50% {
-        border-color: #00ffbb;
-      }
-    }
+  a.back-link {
+    margin-top: 45px;
+    font-size: 1.3rem;
+    padding: 14px 42px;
+    background-color: #00ffbb;
+    color: #001210;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    box-shadow:
+      0 0 20px #00ffbb,
+      0 0 40px #00ffbb;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    z-index: 3;
+  }
 
-    a.back-link {
-      margin-top: 40px;
-      font-size: 1.25rem;
-      padding: 12px 36px;
-      background-color: #00ffbb;
-      color: #000a0a;
-      text-decoration: none;
-      border-radius: 25px;
-      font-weight: bold;
-      box-shadow:
-        0 0 10px #00ffbb,
-        0 0 20px #00ffbb;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    a.back-link:hover {
-      background-color: #00996e;
-      color: #ffffff;
-      box-shadow: 0 0 30px #00ffbb;
-    }
-  </style>
+  a.back-link:hover {
+    background-color: #00996e;
+    color: #ffffff;
+    box-shadow: 0 0 50px #00ffbb;
+  }
+</style>
 </head>
 <body>
 
   <h1>Welcome to the Bunker</h1>
   <div id="typing" class="typing-text"></div>
-
   <a href="index.html" class="back-link">⬅ Return to Main</a>
 
   <script>
@@ -123,9 +145,9 @@
     const typingElement = document.getElementById('typing');
     let msgIndex = 0;
     let charIndex = 0;
-    let typingSpeed = 90;
-    let erasingSpeed = 45;
-    let pauseTime = 2000;
+    let typingSpeed = 85;
+    let erasingSpeed = 40;
+    let pauseTime = 1800;
 
     function typeText() {
       if (charIndex < messages[msgIndex].length) {
@@ -150,7 +172,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      if (messages.length) setTimeout(typeText, 500);
+      if (messages.length) setTimeout(typeText, 700);
     });
   </script>
 
