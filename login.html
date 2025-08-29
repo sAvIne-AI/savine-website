@@ -2,131 +2,136 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SAVINE Login - Neon Hacker Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>SAVINE Login</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
-    html, body {
-      margin: 0; padding: 0; height: 100%;
-      background: #000;
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: black;
       font-family: 'Share Tech Mono', monospace;
       color: #00ff00;
-      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
+      user-select: none;
     }
+
     #matrix-bg {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
       z-index: 0;
       pointer-events: none;
     }
-    .login-box {
-      margin: 8vh auto 0 auto;
-      width: 370px;
-      max-width: 95vw;
-      background: rgba(10,15,10,0.92);
-      border-radius: 24px;
+
+    .login-container {
+      position: relative;
+      background: rgba(0,0,0,0.85);
+      border-radius: 15px;
+      box-shadow: 0 0 25px #00ff00bb;
       border: 2px solid #00ff00;
-      box-shadow: 0 0 30px #00ff0060, 0 0 10px #99ff99;
-      padding: 36px 24px 28px 24px;
-      z-index: 2;
+      padding: 40px 35px;
+      width: 350px;
+      z-index: 10;
       display: flex;
       flex-direction: column;
       align-items: center;
+      gap: 24px;
     }
-    .login-box h1 {
+
+    h1 {
+      font-size: 2.8rem;
+      letter-spacing: 0.15em;
+      margin: 0;
       color: #00ff00;
-      font-size: 2.7rem;
-      margin: 0 0 26px 0;
-      letter-spacing: 0.17em;
-      text-align: center;
-      text-shadow: 0 0 12px #00ff00, 0 0 32px #00ff00aa;
-      font-weight: bold;
+      text-shadow: 0 0 15px #00ff00, 0 0 45px #00ff00aa;
+      user-select: none;
     }
+
     form {
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 18px;
-      align-items: center;
+      gap: 16px;
     }
-    .glow-input {
-      width: 100%;
-      background: rgba(10,15,10,0.7);
-      color: #dbffe4;
-      border: 2px solid #28ff89;
+
+    input {
+      background: transparent;
+      border: 2px solid #00ff00;
       border-radius: 12px;
+      padding: 14px 18px;
+      color: #00ff00;
       font-family: 'Share Tech Mono', monospace;
-      font-size: 1.13rem;
-      padding: 13px 14px;
+      font-size: 1.1rem;
       outline: none;
-      text-align: left;
-      letter-spacing: 0.07em;
-      box-shadow: 0 0 4px #00ff28 inset;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      box-shadow: inset 0 0 8px #00ff0077;
     }
-    .glow-input:focus {
-      border-color: #ffee50;
-      box-shadow: 0 0 15px #ffee50, 0 0 14px #00ff00;
-      color: #ffffff;
+
+    input:focus {
+      border-color: #ff00ff;
+      box-shadow: 0 0 20px #ff00ff;
+      color: #f9f;
     }
-    .glow-btn {
-      width: 70%;
-      margin: 8px 0 0 0;
-      background: #0dff6e;
-      color: #003400;
+
+    button {
+      background: linear-gradient(90deg, #00ff00, #008000);
       border: none;
-      border-radius: 10px;
+      color: #003300;
       font-family: 'Share Tech Mono', monospace;
-      font-size: 1rem;
-      font-weight: bold;
-      text-transform: uppercase;
-      padding: 11px 0;
-      box-shadow: 0 0 16px #0dff6e, 0 0 24px #02ff0a;
-      letter-spacing: 0.07em;
-      cursor: pointer;
-      transition: background 0.15s, color 0.12s, box-shadow 0.18s, transform 0.11s;
-      text-shadow: 0 0 2px #00ff00;
-      display: block;
-    }
-    .glow-btn:hover, .glow-btn:focus {
-      background: #181;
-      color: #01fc7b;
-      box-shadow: 0 0 30px #00ff00, 0 0 44px #0dff6e;
-      outline: none;
-      transform: scale(1.045);
-    }
-    #userDetails {
-      width: 100%;
-      text-align: center;
-      min-height: 1.2em;
-      color: #00ff7a;
-      font-size: 1rem;
+      font-size: 1.2rem;
       font-weight: 700;
-      letter-spacing: 0.05em;
-      margin-top: 12px;
+      padding: 12px 0;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 18px #00ff00, 0 0 50px #00ff00aa;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
     }
-    @media (max-width: 520px) {
-      .login-box { padding: 15px 4vw 18px 4vw; }
-      .login-box h1 { font-size: 2.1rem; }
+
+    button:hover {
+      background: linear-gradient(90deg, #ff00ff, #550055);
+      color: #ff00ff;
+      box-shadow: 0 0 40px #ff00ff, 0 0 80px #ff00ffbb;
+      transform: scale(1.05);
     }
+
+    #userDetails {
+      color: #00ff6a;
+      font-weight: 600;
+      min-height: 1.6em;
+      text-align: center;
+      user-select: none;
+    }
+
   </style>
 </head>
 <body>
+
   <canvas id="matrix-bg"></canvas>
-  <section class="login-box">
+
+  <div class="login-container" role="main" aria-label="Login Form">
     <h1>SAVINE</h1>
     <form id="loginForm" autocomplete="off" novalidate>
-      <input type="email" id="email" class="glow-input" placeholder="Email" autocomplete="off" required />
-      <input type="password" id="password" class="glow-input" placeholder="Password" autocomplete="off" required />
-      <button type="submit" class="glow-btn">LOGIN / SIGN UP</button>
+      <input type="email" id="email" placeholder="Email" required aria-required="true" aria-label="Email Address" />
+      <input type="password" id="password" placeholder="Password" required aria-required="true" aria-label="Password" />
+      <button type="submit" aria-label="Log In or Sign Up">LOGIN / SIGN UP</button>
     </form>
-    <button id="logoutBtn" style="display:none;margin-top:10px;" class="glow-btn">Logout</button>
-    <div id="userDetails"></div>
-  </section>
+    <button id="logoutBtn" style="display:none;">LOG OUT</button>
+    <div id="userDetails" role="alert" aria-live="polite"></div>
+  </div>
+
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
   <script>
-    // Firebase config: replace with your real project config
+    // Replace with your Firebase project config
     const firebaseConfig = {
       apiKey: "AIzaSyDhVEriajG4wXV7nr5v7eQMM-C5QPy7e0A",
       authDomain: "savine-2898.firebaseapp.com",
@@ -135,6 +140,7 @@
       messagingSenderId: "366894135155",
       appId: "1:366894135155:web:6c38075a462bef99b13706"
     };
+
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
@@ -144,27 +150,29 @@
     const logoutBtn = document.getElementById('logoutBtn');
     const userDetailsDiv = document.getElementById('userDetails');
 
-    loginForm.addEventListener('submit', (e) => {
+    loginForm.addEventListener('submit', e => {
       e.preventDefault();
       const email = emailInput.value.trim();
       const password = passwordInput.value.trim();
+
       if (!email || !password) {
-        alert('Please enter both email and password.');
+        alert("Please enter both email and password");
         return;
       }
+
       auth.signInWithEmailAndPassword(email, password)
         .then(userCredential => {
           userDetailsDiv.textContent = `Logged in as: ${userCredential.user.email}`;
-          loginForm.style.display = 'none';
-          logoutBtn.style.display = 'block';
+          loginForm.style.display = "none";
+          logoutBtn.style.display = "block";
         })
         .catch(error => {
-          if (error.code === 'auth/user-not-found') {
+          if (error.code === "auth/user-not-found") {
             auth.createUserWithEmailAndPassword(email, password)
               .then(userCredential => {
                 userDetailsDiv.textContent = `Account created and logged in as: ${userCredential.user.email}`;
-                loginForm.style.display = 'none';
-                logoutBtn.style.display = 'block';
+                loginForm.style.display = "none";
+                logoutBtn.style.display = "block";
               })
               .catch(err => alert(err.message));
           } else {
@@ -175,9 +183,9 @@
 
     logoutBtn.addEventListener('click', () => {
       auth.signOut().then(() => {
-        userDetailsDiv.textContent = '';
-        loginForm.style.display = 'flex';
-        logoutBtn.style.display = 'none';
+        userDetailsDiv.textContent = "";
+        loginForm.style.display = "flex";
+        logoutBtn.style.display = "none";
         loginForm.reset();
       });
     });
@@ -185,47 +193,54 @@
     auth.onAuthStateChanged(user => {
       if (user) {
         userDetailsDiv.textContent = `Logged in as: ${user.email}`;
-        loginForm.style.display = 'none';
-        logoutBtn.style.display = 'block';
+        loginForm.style.display = "none";
+        logoutBtn.style.display = "block";
       } else {
-        userDetailsDiv.textContent = '';
-        loginForm.style.display = 'flex';
-        logoutBtn.style.display = 'none';
+        userDetailsDiv.textContent = "";
+        loginForm.style.display = "flex";
+        logoutBtn.style.display = "none";
       }
     });
 
-    // Matrix Rain
+    // Matrix Sanskrit code rain background
     const canvas = document.getElementById('matrix-bg');
     const ctx = canvas.getContext('2d');
     let width = window.innerWidth;
     let height = window.innerHeight;
+
     canvas.width = width;
     canvas.height = height;
-    const letters = "अआइईउऊऋऌएऐओऔकखगघङचछजझटठडढणतथदधनपफबभमयरलवशषसहॐ।॥0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const fontSize = 21;
-    const columns = Math.floor(width / fontSize);
-    const drops = new Array(columns).fill(1);
 
-    function draw() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.16)";
+    const letters = "अआइईउऊऋऌएऐओऔकखगघङचछजझटठडढणतथदधनपफबभमयरलवशषसहॐ।॥0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const fontSize = 20;
+    const columns = Math.floor(width / fontSize);
+    const drops = Array(columns).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.12)";
       ctx.fillRect(0, 0, width, height);
       ctx.fillStyle = "#00FF00";
       ctx.font = fontSize + "px 'Share Tech Mono', monospace";
+
       for (let i = 0; i < drops.length; i++) {
         const text = letters.charAt(Math.floor(Math.random() * letters.length));
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-        if (drops[i] * fontSize > height && Math.random() > 0.975) drops[i] = 0;
-        drops[i]++;
+        drops[i] = (drops[i] * fontSize > height && Math.random() > 0.975) ? 0 : drops[i] + 1;
       }
     }
+
     function animate() {
-      draw();
+      drawMatrix();
       requestAnimationFrame(animate);
     }
+
     animate();
+
     window.addEventListener('resize', () => {
-      width = window.innerWidth; height = window.innerHeight;
-      canvas.width = width; canvas.height = height;
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
     });
   </script>
 </body>
