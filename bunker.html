@@ -7,22 +7,44 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
-    html,body {
+    html, body {
       margin:0; padding:0;
-      background: #00010a;
+      height: 100%;
+      background: linear-gradient(135deg, #00010a, #001522);
       font-family: 'Share Tech Mono', monospace;
       color: #00fff7;
-      height: 100%;
       overflow-x: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+    }
+
+    /* Horizontal scan lines overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0,255,255,0.06),
+        rgba(0,255,255,0.06) 3px,
+        transparent 3px,
+        transparent 6px
+      );
+      animation: scanLinesHorizontal 5s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes scanLinesHorizontal {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 20px; }
     }
 
     header {
       width: 100%;
       padding: 20px 40px;
-      border-bottom: 1px solid #006060;
       font-size: 2rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -30,6 +52,8 @@
       box-shadow:
         0 0 15px rgba(0,255,255,0.3);
       user-select: none;
+      position: relative;
+      z-index: 1;
     }
 
     main {
@@ -50,32 +74,14 @@
       box-shadow:
         0 0 20px #00fff7a0,
         inset 0 0 20px #005555AA;
-      transition: all 0.3s ease;
       cursor: pointer;
       user-select: none;
       position: relative;
       overflow: hidden;
+      transition: all 0.3s ease;
     }
 
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 300%;
-      height: 200%;
-      background:
-        repeating-radial-gradient(circle,rgba(0,255,255,0.15) 0 20px,transparent 21px 30px);
-      transform: translate(-50%, -50%) rotate(25deg);
-      transition: opacity 0.3s ease;
-      opacity: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .card:hover::before {
-      opacity: 1;
-    }
+    /* Removed the .card::before circular background */
 
     .card:hover {
       box-shadow:
@@ -92,16 +98,16 @@
       letter-spacing: 0.1em;
       color: #00fff7;
       text-shadow: 0 0 10px #00fff7;
-      z-index: 1;
       position: relative;
+      z-index: 1;
     }
 
     .card p {
       font-size: 1.1rem;
       line-height: 1.4;
       color: #00d1b8;
-      z-index: 1;
       position: relative;
+      z-index: 1;
     }
 
     footer {
@@ -114,9 +120,10 @@
       background: #001118;
       box-shadow: inset 0 1px 5px #004040;
       letter-spacing: 0.1em;
+      position: relative;
+      z-index: 1;
     }
 
-    /* Responsive */
     @media (max-width: 600px) {
       main {
         grid-template-columns: 1fr;
