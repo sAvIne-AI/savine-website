@@ -1,74 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🦇 The Bunker</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🦇 The Bunker - Savine</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
     body {
-      background: black;
-      color: #00ffcc;
-      font-family: monospace;
+      background: #000a0a;
+      font-family: 'Share Tech Mono', monospace;
+      color: #00ffbb;
       text-align: center;
-      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
     }
 
     h1 {
-      font-size: 3em;
-      color: #00ffcc;
-      text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
-      animation: glitch 1s infinite;
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      color: #00ffc8;
+      text-shadow:
+        0 0 10px #00ffc8,
+        0 0 20px #00ffc8,
+        0 0 30px #00ffc8,
+        0 0 40px #00ffc8;
+      animation: glitchBunker 2s infinite;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
     }
 
-    @keyframes glitch {
-      0% { text-shadow: 2px 2px red; }
-      20% { text-shadow: -2px -2px lime; }
-      40% { text-shadow: 2px -2px blue; }
-      60% { text-shadow: -2px 2px yellow; }
-      80% { text-shadow: 2px 2px purple; }
-      100% { text-shadow: 0 0 10px #00ffcc; }
+    @keyframes glitchBunker {
+      0%, 100% {
+        text-shadow:
+          0 0 10px #00ffc8,
+          0 0 20px #00ffc8,
+          0 0 30px #00ffc8,
+          0 0 40px #00ffc8;
+      }
+      20% {
+        text-shadow:
+          2px 0 #ff004f,
+          -2px 0 #00fff8,
+          3px 2px #ff0051;
+      }
+      40% {
+        text-shadow:
+          -2px 0 #00fff3,
+          2px 0 #ff0066,
+          -3px 2px #00ffe0;
+      }
+      60% {
+        text-shadow:
+          2px 2px #ff00ff,
+          -2px -2px #00ffc8;
+      }
+      80% {
+        text-shadow:
+          -1px 1px #00fff7,
+          1px -1px #00ffcc;
+      }
     }
 
-    .typing {
-      display: inline-block;
-      border-right: 2px solid #00ffcc;
+    .typing-text {
+      font-size: 1.3rem;
       white-space: nowrap;
       overflow: hidden;
-      animation: typing 5s steps(40, end), blink 0.7s step-end infinite;
-      font-size: 1.2em;
-      margin-top: 20px;
+      border-right: 3px solid #00ffbb;
+      max-width: 75vw;
+      margin: auto;
+      animation: blinkCaret 0.8s step-end infinite;
     }
 
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
+    @keyframes blinkCaret {
+      0%, 100% {
+        border-color: transparent;
+      }
+      50% {
+        border-color: #00ffbb;
+      }
     }
 
-    @keyframes blink {
-      50% { border-color: transparent }
-    }
-
-    a {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 12px 20px;
-      background: #00ffcc;
-      color: black;
-      font-weight: bold;
+    a.back-link {
+      margin-top: 40px;
+      font-size: 1.25rem;
+      padding: 12px 36px;
+      background-color: #00ffbb;
+      color: #000a0a;
       text-decoration: none;
-      border-radius: 8px;
-      transition: 0.3s;
+      border-radius: 25px;
+      font-weight: bold;
+      box-shadow:
+        0 0 10px #00ffbb,
+        0 0 20px #00ffbb;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
-    a:hover {
-      background: #ff0066;
-      color: white;
+
+    a.back-link:hover {
+      background-color: #00996e;
+      color: #ffffff;
+      box-shadow: 0 0 30px #00ffbb;
     }
   </style>
 </head>
 <body>
+
   <h1>Welcome to the Bunker</h1>
-  <p class="typing">You’ve entered the underground tech hub. 🕶️ Here you’ll get secret updates, Savine Coins, and private AI tools.</p>
-  <br>
-  <a href="index.html">⬅ Back to Main Page</a>
+  <div id="typing" class="typing-text"></div>
+
+  <a href="index.html" class="back-link">⬅ Return to Main</a>
+
+  <script>
+    const messages = [
+      "You've entered the underground tech hub. 🕶️",
+      "Here you'll get secret updates, Savine Coins, and private AI tools.",
+      "Stay sharp, operative."
+    ];
+    const typingElement = document.getElementById('typing');
+    let msgIndex = 0;
+    let charIndex = 0;
+    let typingSpeed = 90;
+    let erasingSpeed = 45;
+    let pauseTime = 2000;
+
+    function typeText() {
+      if (charIndex < messages[msgIndex].length) {
+        typingElement.textContent += messages[msgIndex].charAt(charIndex);
+        charIndex++;
+        setTimeout(typeText, typingSpeed);
+      } else {
+        setTimeout(eraseText, pauseTime);
+      }
+    }
+
+    function eraseText() {
+      if (charIndex > 0) {
+        typingElement.textContent = messages[msgIndex].substring(0, charIndex - 1);
+        charIndex--;
+        setTimeout(eraseText, erasingSpeed);
+      } else {
+        msgIndex++;
+        if (msgIndex >= messages.length) msgIndex = 0;
+        setTimeout(typeText, typingSpeed + 1200);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      if (messages.length) setTimeout(typeText, 500);
+    });
+  </script>
+
 </body>
 </html>
