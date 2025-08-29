@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Savine Login</title>
+  <style>
+    body {
+      background: #0a0a0a;
+      color: #00ffea;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+    input, button {
+      margin: 8px 0;
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: none;
+    }
+    button {
+      background-color: #00fff7;
+      color: #0a0a0a;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    #userDetails {
+      margin-top: 20px;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Login to Savine</h1>
+
+  <div>
+    <input type="email" id="email" placeholder="Email" />
+  </div>
+  <div>
+    <input type="password" id="password" placeholder="Password" />
+  </div>
+  <button id="loginBtn">Login / Sign Up</button>
+  <button id="logoutBtn" style="display:none;">Logout</button>
+
+  <div id="userDetails"></div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+  <script>
+    // Paste your Firebase config here:
+    const firebaseConfig = {
+     apiKey: "AIzaSyDhVEriajG4wXV7nr5v7eQMM-C5QPy7e0A",
+     authDomain: "savine-2898.firebaseapp.com",
+     projectId: "savine-2898",
+     storageBucket: "savine-2898.firebasestorage.app",
+     messagingSenderId: "366894135155",
+     appId: "1:366894135155:web:6c38075a462bef99b13706"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const userDetailsDiv = document.getElementById('userDetails');
+
+    loginBtn.addEventListener('click', () => {
+      const email = emailInput.value;
+      const password = passwordInput.value;
+
+      if (!email || !password) {
+        alert('Please enter email and password');
+        return;
+      }
+
+      // Try to sign in first
+      auth.signInWithEmailAndPassword(email, password)
+        .then(userCredential => {
+          // Signed in
+          userDetailsDiv.textContent = `Logged in as: ${userCredential.user.email}`;
+          loginBtn.style.display = 'none';
+          logoutBtn.style.display = 'inline-block';
+        })
+        .catch(error => {
+          if (error.code === 'auth/user-not-found') {
+            // If user not found, create account
+            auth.createUserWithEmailAndPassword(email, password)
+              .then(userCredential => {
+                userDetailsDiv.textContent = `Account created & logged in as: ${userCredential.user.email}`;
+                loginBtn.style.display = 'none';
+                logoutBtn.style.display = 'inline-block';
+              })
+              .catch(err => alert('Error: ' + err.message));
+          } else {
+            alert('Error: ' + error.message);
+          }
+        });
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      auth.signOut().then(() => {
+        userDetailsDiv.textContent = '';
+        loginBtn.style.display = 'inline-block';
+        logoutBtn.style.display = 'none';
+        emailInput.value = '';
+        passwordInput.value = '';
+      });
+    });
+
+    // Keep user logged in after page reload
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        userDetailsDiv.textContent = `Logged in as: ${user.email}`;
+        loginBtn.style.display = 'none';
+        logoutBtn.style.display = 'inline-block';
+      } else {
+        userDetailsDiv.textContent = '';
+        loginBtn.style.display = 'inline-block';
+        logoutBtn.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
