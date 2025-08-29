@@ -16,7 +16,6 @@
       overflow-x: hidden;
     }
     body::before {
-      /* Matrix code aura */
       content: "";
       position: fixed;
       inset: 0;
@@ -64,7 +63,9 @@
       z-index: 2;
       display: none;
     }
-    .card {
+    a.panel {
+      text-decoration: none;
+      cursor: pointer;
       width: 90vw;
       max-width: 490px;
       background: rgba(0,20,0,0.97);
@@ -81,16 +82,15 @@
       gap: 10px;
       transition: box-shadow 0.2s, transform 0.17s;
       position: relative;
+      color: #a4ffc9;
     }
-    .card:not(:last-child) {
-      margin-bottom: 0;
-    }
-    .card:hover, .card:focus-within {
+    a.panel:hover, a.panel:focus {
       box-shadow: 0 0 80px #70ffad, 0 0 140px #00ff57bb;
       transform: scale(1.015);
       border-color: #aaffc9;
+      outline: none;
     }
-    .card h2 {
+    a.panel h2 {
       font-size: 2.11rem;
       margin-bottom: 9px;
       margin-top: 0;
@@ -102,7 +102,7 @@
       text-align: center;
       user-select: none;
     }
-    .card p {
+    a.panel p {
       font-size: 1.19rem;
       color: #e5ffee;
       letter-spacing: 0.045em;
@@ -110,15 +110,6 @@
       margin: 0;
       text-shadow: 0 0 10px #36ff94a9;
     }
-    @media (max-width: 600px) {
-      main { gap: 22px; padding-left: 0; padding-right: 0; }
-      .card { padding: 35px 10vw 30px 10vw; }
-    }
-    @media (max-width: 400px) {
-      .card { padding: 25px 3vw 25px 3vw; }
-      header { font-size: 1.3rem; }
-    }
-
     #loadingMessage {
       color: #00ff57;
       font-family: 'Share Tech Mono', monospace;
@@ -129,6 +120,16 @@
       user-select: none;
       z-index: 10;
     }
+    @media (max-width: 600px) {
+      main { gap: 22px; padding-left: 0; padding-right: 0; }
+      a.panel { padding: 35px 10vw 30px 10vw; }
+      a.panel h2 { font-size: 1.8rem; }
+      a.panel p { font-size: 1.05rem; }
+    }
+    @media (max-width: 400px) {
+      a.panel { padding: 25px 3vw 25px 3vw; }
+      header { font-size: 1.3rem; }
+    }
   </style>
 </head>
 <body>
@@ -138,29 +139,28 @@
   <header>🦇 SAVINE BUNKER</header>
 
   <main>
-    <div class="card" tabindex="0">
+    <a href="projects.html" class="panel" tabindex="0" role="button" aria-label="Projects Section">
       <h2>Projects</h2>
       <p>Manage your secret tech projects and missions in one seamless dashboard.</p>
-    </div>
-    <div class="card" tabindex="0">
+    </a>
+    <a href="tools.html" class="panel" tabindex="0" role="button" aria-label="Tools Section">
       <h2>Tools</h2>
       <p>Access custom neon cyber-tools, run scripts and hack with style.</p>
-    </div>
-    <div class="card" tabindex="0">
+    </a>
+    <a href="private-ai.html" class="panel" tabindex="0" role="button" aria-label="Private AI Section">
       <h2>Private AI</h2>
       <p>Talk to your personal AI assistant—always discreet, always green.</p>
-    </div>
-    <div class="card" tabindex="0">
+    </a>
+    <a href="settings.html" class="panel" tabindex="0" role="button" aria-label="Settings Section">
       <h2>Settings</h2>
       <p>Personalize your underground system with glowing precision.</p>
-    </div>
+    </a>
   </main>
 
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
   <script>
-    // Your Firebase config values here:
     const firebaseConfig = {
       apiKey: "AIzaSyDhVEriajG4wXV7nr5v7eQMM-C5QPy7e0A",
       authDomain: "savine-2898.firebaseapp.com",
