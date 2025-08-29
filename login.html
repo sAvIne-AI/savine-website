@@ -1,60 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Savine Login</title>
-  <style>
-    body {
-      background: #0a0a0a;
-      color: #00ffea;
-      font-family: 'Courier New', monospace;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      flex-direction: column;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Savine Login - Hacker Tech Vibes</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+  body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at center, #000000, #001414);
+    font-family: 'Share Tech Mono', monospace;
+    color: #00ffea;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Flickering ambient glow behind */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-radial-gradient(circle at center, #00ffe2 0px, #00ffe2 10px, transparent 11px, transparent 15px);
+    opacity: 0.1;
+    animation: flickerBG 4s infinite alternate;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  @keyframes flickerBG {
+    0%, 100% {opacity: 0.15;}
+    50% {opacity: 0.5;}
+  }
+
+  h1 {
+    font-size: 3rem;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px #00fff7, 0 0 20px #00fff7, 0 0 30px #00fff7;
+    margin-bottom: 2rem;
+    animation: glitch 3s infinite ease-in-out;
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes glitch {
+    0%, 100% {
+      text-shadow: 0 0 10px #00fff7, 0 0 20px #00fff7, 0 0 30px #00fff7;
     }
-    input, button {
-      margin: 8px 0;
-      padding: 10px;
-      font-size: 1rem;
-      border-radius: 4px;
-      border: none;
+    20% {
+      text-shadow: 2px 0 red, -2px 0 cyan, 3px 2px purple;
     }
-    button {
-      background-color: #00fff7;
-      color: #0a0a0a;
-      cursor: pointer;
-      font-weight: bold;
+    40% {
+      text-shadow: -2px 0 #ff00de, 2px 0 cyan, -3px 2px #00eaff;
     }
-    #userDetails {
-      margin-top: 20px;
-      font-size: 1.1rem;
+    60% {
+      text-shadow: 2px 2px #fffb00, -2px -2px #00fff7;
     }
-  </style>
+    80% {
+      text-shadow: -1px 1px cyan, 1px -1px #00fff7;
+    }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    z-index: 1;
+  }
+
+  input[type="email"],
+  input[type="password"] {
+    background: transparent;
+    border: 2px solid #00fff7;
+    border-radius: 6px;
+    padding: 12px 15px;
+    font-size: 1rem;
+    color: #00fff7;
+    margin-bottom: 15px;
+    outline: none;
+    transition: 0.3s;
+  }
+
+  input[type="email"]:focus,
+  input[type="password"]:focus {
+    border-color: #ff00de;
+    box-shadow: 0 0 10px #ff00de;
+  }
+
+  button {
+    background: linear-gradient(90deg, #00ffe9, #00afff);
+    border: none;
+    padding: 14px 0;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #000a0a;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 0 20px #00fff7;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: linear-gradient(90deg, #ff00de, #aa00ff);
+    color: #fff;
+    box-shadow: 0 0 30px #ff00de;
+    transform: scale(1.05);
+  }
+
+  #userDetails {
+    margin-top: 25px;
+    font-size: 1.2rem;
+    min-height: 1.5em;
+    color: #00ffbb;
+    text-align: center;
+    font-weight: bold;
+    z-index: 1;
+  }
+</style>
 </head>
 <body>
 
-  <h1>Login to Savine</h1>
+  <h1>Savine Login</h1>
 
-  <div>
-    <input type="email" id="email" placeholder="Email" />
-  </div>
-  <div>
-    <input type="password" id="password" placeholder="Password" />
-  </div>
-  <button id="loginBtn">Login / Sign Up</button>
-  <button id="logoutBtn" style="display:none;">Logout</button>
+  <form id="loginForm">
+    <input type="email" placeholder="Enter your email" id="email" required autocomplete="off" />
+    <input type="password" placeholder="Enter your password" id="password" required autocomplete="off" />
+    <button type="submit" id="loginBtn">Login / Sign Up</button>
+  </form>
+
+  <button id="logoutBtn" style="display:none; margin-top: 15px;">Logout</button>
 
   <div id="userDetails"></div>
 
-  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
   <script>
-    // Paste your Firebase config here:
     const firebaseConfig = {
      apiKey: "AIzaSyDhVEriajG4wXV7nr5v7eQMM-C5QPy7e0A",
      authDomain: "savine-2898.firebaseapp.com",
@@ -63,8 +148,6 @@
      messagingSenderId: "366894135155",
      appId: "1:366894135155:web:6c38075a462bef99b13706"
     };
-
-    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
@@ -73,38 +156,33 @@
     const loginBtn = document.getElementById('loginBtn');
     const logoutBtn = document.getElementById('logoutBtn');
     const userDetailsDiv = document.getElementById('userDetails');
+    const loginForm = document.getElementById('loginForm');
 
-    loginBtn.addEventListener('click', () => {
+    loginForm.addEventListener('submit', e => {
+      e.preventDefault();
       const email = emailInput.value;
       const password = passwordInput.value;
 
       if (!email || !password) {
-        alert('Please enter email and password');
+        alert('Please enter both email and password');
         return;
       }
 
-      // Try to sign in first
-      auth.signInWithEmailAndPassword(email, password)
-        .then(userCredential => {
-          // Signed in
-          userDetailsDiv.textContent = `Logged in as: ${userCredential.user.email}`;
-          loginBtn.style.display = 'none';
-          logoutBtn.style.display = 'inline-block';
-        })
-        .catch(error => {
-          if (error.code === 'auth/user-not-found') {
-            // If user not found, create account
-            auth.createUserWithEmailAndPassword(email, password)
-              .then(userCredential => {
-                userDetailsDiv.textContent = `Account created & logged in as: ${userCredential.user.email}`;
-                loginBtn.style.display = 'none';
-                logoutBtn.style.display = 'inline-block';
-              })
-              .catch(err => alert('Error: ' + err.message));
-          } else {
-            alert('Error: ' + error.message);
-          }
-        });
+      auth.signInWithEmailAndPassword(email, password).then(userCredential => {
+        userDetailsDiv.textContent = `Logged in as: ${userCredential.user.email}`;
+        loginBtn.style.display = 'none';
+        logoutBtn.style.display = 'inline-block';
+      }).catch(error => {
+        if (error.code === 'auth/user-not-found') {
+          auth.createUserWithEmailAndPassword(email, password).then(userCredential => {
+            userDetailsDiv.textContent = `Account created & logged in as: ${userCredential.user.email}`;
+            loginBtn.style.display = 'none';
+            logoutBtn.style.display = 'inline-block';
+          }).catch(err => alert('Error: ' + err.message));
+        } else {
+          alert('Error: ' + error.message);
+        }
+      });
     });
 
     logoutBtn.addEventListener('click', () => {
@@ -112,12 +190,10 @@
         userDetailsDiv.textContent = '';
         loginBtn.style.display = 'inline-block';
         logoutBtn.style.display = 'none';
-        emailInput.value = '';
-        passwordInput.value = '';
+        loginForm.reset();
       });
     });
 
-    // Keep user logged in after page reload
     auth.onAuthStateChanged(user => {
       if (user) {
         userDetailsDiv.textContent = `Logged in as: ${user.email}`;
@@ -130,5 +206,6 @@
       }
     });
   </script>
+
 </body>
 </html>
