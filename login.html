@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Savine Login - Futuristic Hacker Console</title>
+  <title>Savine Login - Hacking the World</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
@@ -86,7 +86,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 26px;
+      gap: 24px;
     }
     .login-panel h1 {
       margin: 0;
@@ -102,22 +102,23 @@
       width: 100%;
       background: transparent;
       border: 2px solid #00ff00;
-      border-radius: 14px;
+      border-radius: 10px;
       padding: 15px 20px;
       font-family: 'Share Tech Mono', monospace;
       font-size: 1.15rem;
       color: #00ff00;
       outline: none;
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 0;
     }
     input[type="email"]:focus, input[type="password"]:focus {
       border-color: #ff00de;
       box-shadow: 0 0 25px #ff00de;
     }
     button {
-      padding: 16px 0;
+      padding: 14px 0;
       width: 100%;
-      border-radius: 50px;
+      border-radius: 14px;
       background: linear-gradient(90deg, #00ff00, #009933);
       border: none;
       font-family: 'Share Tech Mono', monospace;
@@ -128,12 +129,13 @@
       text-transform: uppercase;
       box-shadow: 0 0 38px #00ff00;
       transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+      margin-top: 10px;
     }
     button:hover, button:focus {
       background: linear-gradient(90deg, #ff00de, #aa00ff);
       color: white;
       box-shadow: 0 0 58px #ff00de;
-      transform: scale(1.07);
+      transform: scale(1.06);
       outline: none;
     }
     #userDetails {
@@ -270,7 +272,7 @@
       }
     });
 
-    // Matrix code rain
+    // Matrix code rain animation
     const canvas = document.getElementById('matrix-bg');
     const ctx = canvas.getContext('2d');
     let width = window.innerWidth;
