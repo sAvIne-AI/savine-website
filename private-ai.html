@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Private AI - SAVINE</title>
+  <title>Tools - SAVINE</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
     body {
@@ -13,117 +13,74 @@
       margin: 0;
       padding: 20px;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
     h1 {
       font-size: 2.5rem;
-      margin-bottom: 20px;
-      letter-spacing: 0.15em;
-      text-shadow: 0 0 12px #00ff44, 0 0 40px #00ff44aa;
-      user-select: none;
       text-align: center;
+      margin-bottom: 18px;
+      text-shadow: 0 0 12px #00ff44, 0 0 40px #00ff44aa;
+      letter-spacing: 0.15em;
+      user-select: none;
     }
     a.back-link {
-      align-self: flex-start;
+      display: block;
+      margin-bottom: 30px;
       color: #00ff44;
       text-decoration: none;
       font-size: 1.1rem;
       letter-spacing: 0.1em;
-      margin-bottom: 24px;
       user-select: none;
     }
     a.back-link:hover {
       text-decoration: underline;
     }
-    #chatContainer {
-      background: rgba(0, 30, 0, 0.9);
-      border-radius: 18px;
-      border: 2.5px solid #00ff44;
+    #logoutBtn {
+      float: right;
+      background: #002200cc;
+      border: 2px solid #00ff44;
+      padding: 7px 12px;
+      color: #00ff44;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: 'Share Tech Mono', monospace;
+      font-weight: 700;
+      user-select: none;
+      transition: background 0.3s, box-shadow 0.3s;
+      margin-bottom: 20px;
+    }
+    #logoutBtn:hover {
+      background: #005500dd;
       box-shadow: 0 0 20px #00ff44aa;
-      width: 100%;
-      max-width: 600px;
-      height: 450px;
+    }
+    #toolsContainer {
+      max-width: 580px;
+      margin: 0 auto;
       display: flex;
       flex-direction: column;
-      padding: 14px 18px;
-      overflow-y: auto;
+      gap: 14px;
+      font-family: 'Share Tech Mono', monospace;
+    }
+    .tool-item {
+      background: rgba(0, 40, 0, 0.9);
+      border-radius: 16px;
+      border: 2.5px solid #00ff44;
+      padding: 18px 22px;
+      box-shadow: 0 0 14px #22ee44;
       color: #b0ffb0;
-      font-size: 1rem;
-      font-family: 'Share Tech Mono', monospace;
-      user-select: text;
-    }
-    #inputForm {
-      max-width: 600px;
-      width: 100%;
-      margin-top: 16px;
-      display: flex;
-      gap: 10px;
-    }
-    #userInput {
-      flex-grow: 1;
-      padding: 10px 14px;
-      border-radius: 12px;
-      border: 2px solid #00ff44;
-      background: rgba(0, 30, 0, 0.95);
-      color: #caffca;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 1rem;
-      outline: none;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-    #userInput:focus {
-      border-color: #aaff77;
-      box-shadow: 0 0 15px #aaff77;
-      color: #e0ffe0;
-    }
-    #sendBtn {
-      background: linear-gradient(90deg, #00ff00, #009900);
-      border: none;
-      padding: 0 16px;
-      border-radius: 12px;
-      color: #001f00;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 0 20px #00ff44, 0 0 50px #00ff4488;
-      transition: background 0.3s, box-shadow 0.3s;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 1rem;
       user-select: none;
-    }
-    #sendBtn:hover {
-      background: linear-gradient(90deg, #aaff44, #44aa00);
-      box-shadow: 0 0 38px #aaff44, 0 0 70px #44aa0066;
-    }
-    #statusMessage {
-      margin-top: 12px;
-      color: #77ff77;
-      font-weight: 700;
-      text-align: center;
-      user-select: none;
-    }
-    @media (max-width: 640px) {
-      #chatContainer, #inputForm {
-        max-width: 95vw;
-      }
     }
   </style>
 </head>
 <body>
 
   <a href="bunker.html" class="back-link">&larr; Back to Bunker</a>
+  <button id="logoutBtn" title="Logout">Logout</button>
 
-  <h1>Private AI</h1>
-
-  <div id="chatContainer" role="log" aria-live="polite" aria-relevant="additions"></div>
-
-  <form id="inputForm" autocomplete="off">
-    <input type="text" id="userInput" placeholder="Type your message..." required aria-label="Chat input" />
-    <button id="sendBtn" type="submit">Send</button>
-  </form>
-
-  <div id="statusMessage"></div>
+  <h1>Tools</h1>
+  <div id="toolsContainer">
+    <div class="tool-item">Tool 1 Placeholder - Coming Soon</div>
+    <div class="tool-item">Tool 2 Placeholder - Coming Soon</div>
+  </div>
 
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -140,58 +97,15 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    const chatContainer = document.getElementById('chatContainer');
-    const inputForm = document.getElementById('inputForm');
-    const userInput = document.getElementById('userInput');
-    const statusMessage = document.getElementById('statusMessage');
+    const logoutBtn = document.getElementById('logoutBtn');
 
     auth.onAuthStateChanged(user => {
-      if (!user) {
-        window.location.href = "login.html";
-      }
+      if (!user) window.location.href = 'login.html';
     });
 
-    // Placeholder chat history and simple interaction
-    const chatHistory = [];
-
-    function appendMessage(sender, text) {
-      const msgDiv = document.createElement('div');
-      msgDiv.textContent = `${sender}: ${text}`;
-      msgDiv.style.marginBottom = '8px';
-      msgDiv.style.whiteSpace = 'pre-wrap';
-      chatContainer.appendChild(msgDiv);
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-    }
-
-    inputForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const text = userInput.value.trim();
-      if (!text) return;
-      appendMessage('You', text);
-      userInput.value = '';
-      statusMessage.textContent = "Thinking...";
-
-      // Simulate AI response delay
-      setTimeout(() => {
-        const response = generateAIResponse(text);
-        appendMessage('AI', response);
-        statusMessage.textContent = "";
-      }, 1200);
+    logoutBtn.addEventListener('click', () => {
+      auth.signOut().then(() => window.location.href = "login.html");
     });
-
-    // Simple AI response simulation
-    function generateAIResponse(input) {
-      // Placeholder simple fixed responses, you can integrate real AI here
-      const responses = [
-        "I'm here to help!",
-        "Can you tell me more?",
-        "That's interesting.",
-        "Let me think about that.",
-        "How can I assist you further?"
-      ];
-      return responses[Math.floor(Math.random() * responses.length)];
-    }
   </script>
 </body>
 </html>
-
