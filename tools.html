@@ -34,50 +34,52 @@
     a.back-link:hover {
       text-decoration: underline;
     }
+    #logoutBtn {
+      float: right;
+      background: #002200cc;
+      border: 2px solid #00ff44;
+      padding: 7px 12px;
+      color: #00ff44;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: 'Share Tech Mono', monospace;
+      font-weight: 700;
+      user-select: none;
+      transition: background 0.3s, box-shadow 0.3s;
+      margin-bottom: 20px;
+    }
+    #logoutBtn:hover {
+      background: #005500dd;
+      box-shadow: 0 0 20px #00ff44aa;
+    }
     #toolsContainer {
-      max-width: 550px;
+      max-width: 580px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
       gap: 14px;
+      font-family: 'Share Tech Mono', monospace;
     }
     .tool-item {
       background: rgba(0, 40, 0, 0.9);
       border-radius: 16px;
       border: 2.5px solid #00ff44;
-      padding: 16px 20px;
-      user-select: none;
-      color: #b0ffb0;
-      font-family: 'Share Tech Mono', monospace;
+      padding: 18px 22px;
       box-shadow: 0 0 14px #22ee44;
-    }
-    #statusMessage {
-      max-width: 550px;
-      margin: 0 auto 20px auto;
-      height: 1.4em;
-      text-align: center;
-      font-weight: 700;
-      color: #77ff77;
+      color: #b0ffb0;
       user-select: none;
-    }
-    @media (max-width: 480px) {
-      #toolsContainer {
-        width: 90vw;
-      }
     }
   </style>
 </head>
 <body>
 
   <a href="bunker.html" class="back-link">&larr; Back to Bunker</a>
+  <button id="logoutBtn" title="Logout">Logout</button>
 
   <h1>Tools</h1>
-
-  <div id="statusMessage"></div>
   <div id="toolsContainer">
     <div class="tool-item">Tool 1 Placeholder - Coming Soon</div>
     <div class="tool-item">Tool 2 Placeholder - Coming Soon</div>
-    <div class="tool-item">Tool 3 Placeholder - Coming Soon</div>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -95,12 +97,15 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
+    const logoutBtn = document.getElementById('logoutBtn');
+
     auth.onAuthStateChanged(user => {
-      if (!user) {
-        window.location.href = "login.html";
-      }
+      if (!user) window.location.href = 'login.html';
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      auth.signOut().then(() => window.location.href = "login.html");
     });
   </script>
 </body>
 </html>
-
