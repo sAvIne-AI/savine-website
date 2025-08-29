@@ -8,98 +8,95 @@
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
   body {
-    background: radial-gradient(circle at center, #001210, #000000);
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at center, #001111, #000000);
     font-family: 'Share Tech Mono', monospace;
     color: #00ffbb;
-    text-align: center;
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    height: 100vh;
-    margin: 0;
+    align-items: center;
+    flex-direction: column;
     overflow: hidden;
     position: relative;
   }
 
-  /* Subtle glitch flicker */
+  /* Ambient scan lines */
   body::before {
     content: '';
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     pointer-events: none;
-    background:
-      repeating-linear-gradient(
-        45deg,
-        rgba(0,255,187,0.05),
-        rgba(0,255,187,0.05) 2px,
-        transparent 2px,
-        transparent 4px
-      );
+    background: repeating-linear-gradient(
+      0deg, rgba(0,255,187,0.05) 0px, rgba(0,255,187,0.05) 2px,
+      transparent 2px, transparent 4px
+    );
     animation: flickerBG 4s infinite alternate;
     z-index: 0;
   }
 
   @keyframes flickerBG {
-    0%, 100% { opacity: 0.15; }
-    50% { opacity: 0.5; }
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.4; }
   }
 
   h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
     color: #00ffc8;
+    font-size: 4rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
     text-shadow:
       0 0 10px #00ffc8,
-      0 0 25px #00ffc8,
-      0 0 35px #00ffc8,
-      0 0 50px #00ffc8;
-    animation: glitchBunker 2.5s infinite;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    z-index: 1;
+      0 0 30px #00ffc8,
+      0 0 40px #00ffc8,
+      0 0 60px #00ffc8;
+    animation: glitchBunker 2s infinite ease-in-out alternate;
+    margin: 0 0 1em;
+    z-index: 2;
   }
 
   @keyframes glitchBunker {
     0%, 100% {
-      text-shadow: 
+      text-shadow:
         0 0 10px #00ffc8,
-        0 0 25px #00ffc8,
-        0 0 35px #00ffc8,
-        0 0 50px #00ffc8;
+        0 0 30px #00ffc8,
+        0 0 40px #00ffc8,
+        0 0 60px #00ffc8;
     }
     20% {
-      text-shadow: 
-        2px 0 #ff004f,
-        -2px 0 #00fff8,
-        3px 2px #ff0051;
+      text-shadow:
+        3px 0 #ff3399,
+        -3px 0 #00ffee,
+        4px 2px #ff3399;
     }
     40% {
-      text-shadow: 
-        -2px 0 #00fff3,
-        2px 0 #ff0066,
-        -3px 2px #00ffe0;
+      text-shadow:
+        -3px 0 #00ffee,
+        3px 0 #ff3399,
+        -4px 2px #00ffff;
     }
     60% {
-      text-shadow: 
-        2px 2px #ff00ff,
-        -2px -2px #00ffc8;
+      text-shadow:
+        3px 3px #ff3399,
+        -3px -3px #00ffc8;
     }
     80% {
-      text-shadow: 
-        -1px 1px #00fff7,
-        1px -1px #00ffcc;
+      text-shadow:
+        -1px 1px #00ffcc,
+        1px -1px #00ffbb;
     }
   }
 
   .typing-text {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     white-space: nowrap;
     overflow: hidden;
+    text-align: center;
     border-right: 3px solid #00ffbb;
     max-width: 80vw;
-    margin: auto;
-    animation: blinkCaret 0.9s step-end infinite;
+    animation: blinkCaret 0.8s steps(40, end) infinite;
     z-index: 2;
+    margin: 0 auto;
   }
 
   @keyframes blinkCaret {
@@ -108,32 +105,34 @@
   }
 
   a.back-link {
-    margin-top: 45px;
-    font-size: 1.3rem;
-    padding: 14px 42px;
+    margin-top: 40px;
+    padding: 14px 46px;
     background-color: #00ffbb;
-    color: #001210;
+    border-radius: 50px;
+    font-weight: 700;
+    color: #000a0a;
     text-decoration: none;
-    border-radius: 30px;
-    font-weight: bold;
+    font-size: 1.3rem;
     box-shadow:
-      0 0 20px #00ffbb,
-      0 0 40px #00ffbb;
-    transition: background-color 0.3s ease, color 0.3s ease;
+      0 0 30px #00ffbb,
+      0 0 50px #00ffbb;
+    transition: all 0.3s ease;
     z-index: 3;
   }
 
   a.back-link:hover {
     background-color: #00996e;
-    color: #ffffff;
-    box-shadow: 0 0 50px #00ffbb;
+    color: white;
+    box-shadow:
+      0 0 50px #00ffbb,
+      0 0 70px #00ffbb;
   }
+
 </style>
 </head>
 <body>
-
   <h1>Welcome to the Bunker</h1>
-  <div id="typing" class="typing-text"></div>
+  <div class="typing-text" id="typing"></div>
   <a href="index.html" class="back-link">⬅ Return to Main</a>
 
   <script>
@@ -143,11 +142,11 @@
       "Stay sharp, operative."
     ];
     const typingElement = document.getElementById('typing');
-    let msgIndex = 0;
-    let charIndex = 0;
-    let typingSpeed = 85;
-    let erasingSpeed = 40;
-    let pauseTime = 1800;
+    let msgIndex = 0,
+        charIndex = 0,
+        typingSpeed = 80,
+        erasingSpeed = 40,
+        pauseTime = 2000;
 
     function typeText() {
       if (charIndex < messages[msgIndex].length) {
@@ -171,10 +170,9 @@
       }
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      if (messages.length) setTimeout(typeText, 700);
+    document.addEventListener('DOMContentLoaded', () => {
+      if (messages.length) setTimeout(typeText, 500);
     });
   </script>
-
 </body>
 </html>
