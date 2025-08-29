@@ -1,237 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>🦇 SAVINE — The Underground Tech Hub</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🦇 SAVINE — The Underground Tech Hub</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
-  /* Background gradient and animated particles */
-  body {
-    margin: 0;
-    height: 100vh;
-    background: linear-gradient(135deg, #000000, #02040f);
-    font-family: 'Share Tech Mono', monospace;
-    color: #00fff7;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  }
-  /* Particle dots background */
-  canvas#particles {
-    position: fixed;
-    top:0; left:0; right:0; bottom:0;
-    z-index: 0;
-  }
-  h1 {
-    font-size: 4rem;
-    text-transform: uppercase;
-    color: #00fff7;
-    letter-spacing: 0.3em;
-    text-shadow:
-      0 0 10px #00fff7,
-      0 0 30px #00fff7,
-      0 0 50px #00fff7;
-    animation: glitch 2.5s linear infinite;
-    margin: 0;
-    z-index: 1;
-  }
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #000000;
+      font-family: 'Share Tech Mono', monospace;
+      overflow: hidden;
+      color: #00fff7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      position: relative;
+    }
 
-  @keyframes glitch {
-    0%, 100% {
-      text-shadow:
-      0 0 10px #00fff7,
-      0 0 30px #00fff7,
-      0 0 50px #00fff7;
+    /* Animated grid background */
+    #bgCanvas {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      background: linear-gradient(135deg, #000000, #111820);
     }
-    20% {
-      text-shadow:
-      2px 0 red,
-      -2px 0 cyan,
-      3px 2px blue;
-    }
-    40% {
-      text-shadow:
-      -2px 0 #ff00de,
-      2px 0 cyan,
-      -3px 2px #00eaff;
-    }
-    60% {
-      text-shadow:
-      2px 2px #fffb00,
-      -2px -2px #00fff7;
-    }
-    80% {
-      text-shadow:
-      -1px 1px cyan,
-      1px -1px #00fff7;
-    }
-  }
 
-  .typing-container {
-    font-size: 1.4rem;
-    margin-top: 25px;
-    max-width: 650px;
-    min-height: 3em;
-    border-right: 3px solid #00fff7;
-    white-space: nowrap;
-    overflow: hidden;
-    animation: blink-caret 0.8s step-end infinite;
-    text-align: center;
-    z-index: 1;
-  }
+    /* Title */
+    h1 {
+      font-size: 5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      text-shadow:
+        0 0 15px #00fff7,
+        0 0 40px #00fff7,
+        0 0 80px #00fff7;
+      margin: 0;
+      animation: flicker 3s infinite ease-in-out;
+      z-index: 1;
+      user-select: none;
+    }
 
-  @keyframes blink-caret {
-    from, to { border-color: transparent; }
-    50% { border-color: #00fff7; }
-  }
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+      }
+      20%, 22%, 24%, 55% {
+        opacity: 0.5;
+      }
+    }
 
-  a.enter-button {
-    margin-top: 40px;
-    padding: 16px 48px;
-    border-radius: 50px;
-    background: linear-gradient(90deg, #00fff7, #00b1ff);
-    color: #02040f;
-    font-weight: bold;
-    font-size: 1.35rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    text-decoration: none;
-    box-shadow:
-      0 0 20px #00fff7,
-      0 0 40px #00fff7;
-    transition: all 0.3s ease;
-    z-index: 1;
-  }
-  a.enter-button:hover {
-    background: linear-gradient(90deg, #ff00de, #aa00ff);
-    color: white;
-    box-shadow:
-      0 0 50px #ff00de,
-      0 0 100px #ff00de;
-    transform: scale(1.1);
-  }
-</style>
+    /* Neon button */
+    a.enter-button {
+      margin-top: 50px;
+      padding: 20px 60px;
+      border-radius: 60px;
+      color: #000;
+      background: #00fff7;
+      font-weight: bold;
+      font-size: 1.75rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      box-shadow:
+        0 0 15px #00fff7,
+        0 0 35px #00fff7,
+        inset 0 0 10px #00fff7;
+      transition: all 0.3s ease;
+      user-select: none;
+      z-index: 1;
+    }
+    a.enter-button:hover, a.enter-button:focus {
+      color: #00fff7;
+      background: transparent;
+      box-shadow:
+        0 0 30px #00fff7,
+        0 0 60px #00fff7,
+        inset 0 0 20px #00fff7;
+      transform: scale(1.1);
+      outline: none;
+    }
+  </style>
 </head>
 <body>
 
-  <canvas id="particles"></canvas>
+  <canvas id="bgCanvas"></canvas>
 
   <h1>🦇 SAVINE</h1>
-  <div id="typing" class="typing-container"></div>
-  <a href="bunker.html" class="enter-button">Enter the Bunker</a>
+  <a href="bunker.html" class="enter-button" tabindex="1">Enter the Bunker</a>
 
-  <script>
-    // Typed text animation
-    const textArray = [
-      "Welcome to your underground tech hub.",
-      "Private tech help, hacker-vibes, chatbot.",
-      "Earn Savine Coins and unlock secrets."
-    ];
-    const typingElement = document.getElementById('typing');
-    let arrayIndex = 0;
-    let charIndex = 0;
-    let typingDelay = 80;
-    let erasingDelay = 40;
-    let newTextDelay = 1500;
+<script>
+  // Animated grid lines on black background
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let w, h;
+  const gridSpacing = 30;
+  const lines = [];
 
-    function type() {
-      if (charIndex < textArray[arrayIndex].length) {
-        typingElement.textContent += textArray[arrayIndex].charAt(charIndex);
-        charIndex++;
-        setTimeout(type, typingDelay);
-      } else {
-        setTimeout(erase, newTextDelay);
+  function resize() {
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.width = w;
+    canvas.height = h;
+  }
+
+  class Line {
+    constructor(x1, y1, x2, y2, delay) {
+      this.x1 = x1; this.y1 = y1; this.x2 = x2; this.y2 = y2;
+      this.alpha = 0;
+      this.delay = delay;
+      this.speed = 0.007;
+    }
+    update() {
+      if(this.alpha < 1) {
+        if(this.delay > 0) this.delay--;
+        else this.alpha += this.speed;
       }
     }
-
-    function erase() {
-      if (charIndex > 0) {
-        typingElement.textContent = textArray[arrayIndex].substring(0, charIndex - 1);
-        charIndex--;
-        setTimeout(erase, erasingDelay);
-      } else {
-        arrayIndex++;
-        if (arrayIndex >= textArray.length) arrayIndex = 0;
-        setTimeout(type, typingDelay + 1100);
-      }
+    draw() {
+      ctx.strokeStyle = `rgba(0,255,255,${this.alpha})`;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(this.x1, this.y1);
+      ctx.lineTo(this.x2, this.y2);
+      ctx.stroke();
     }
+  }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      if(textArray.length) setTimeout(type, newTextDelay + 250);
+  function createGridLines() {
+    lines.length = 0;
+    for(let x=0; x<=w; x += gridSpacing){
+      lines.push(new Line(x,0,x,h,Math.floor(Math.random()*200)));
+    }
+    for(let y=0; y<=h; y += gridSpacing){
+      lines.push(new Line(0,y,w,y,Math.floor(Math.random()*200)));
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0,0,w,h);
+    lines.forEach(line => {
+      line.update();
+      line.draw();
     });
+    requestAnimationFrame(animate);
+  }
 
-    // Particle background effect
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    const maxParticles = 120;
+  window.addEventListener('resize', () => {
+    resize();
+    createGridLines();
+  });
 
-    function randomRange(min, max) {
-      return Math.random() * (max - min) + min;
-    }
+  resize();
+  createGridLines();
+  animate();
+</script>
 
-    class Particle {
-      constructor() {
-        this.init();
-      }
-      init() {
-        this.x = randomRange(0, window.innerWidth);
-        this.y = randomRange(0, window.innerHeight);
-        this.size = randomRange(1, 3);
-        this.speedX = randomRange(-0.3, 0.3);
-        this.speedY = randomRange(-0.3, 0.3);
-        this.opacity = randomRange(0.2, 0.8);
-      }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (this.x < 0 || this.x > window.innerWidth) this.speedX *= -1;
-        if (this.y < 0 || this.y > window.innerHeight) this.speedY *= -1;
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.fillStyle = `rgba(0, 255, 255, ${this.opacity})`;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = '#00fff7';
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    function initParticles() {
-      particles = [];
-      for (let i = 0; i < maxParticles; i++) {
-        particles.push(new Particle());
-      }
-    }
-
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
-      }
-      requestAnimationFrame(animateParticles);
-    }
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-
-    window.addEventListener('resize', () => {
-      resizeCanvas();
-      initParticles();
-    });
-
-    resizeCanvas();
-    initParticles();
-    animateParticles();
-  </script>
 </body>
 </html>
