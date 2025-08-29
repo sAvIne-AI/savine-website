@@ -23,8 +23,8 @@
       user-select: none;
     }
     a.back-link {
-      display: block;
-      margin-bottom: 24px;
+      display: inline-block;
+      margin-bottom: 20px;
       color: #00ff44;
       text-decoration: none;
       font-size: 1.1rem;
@@ -34,12 +34,29 @@
     a.back-link:hover {
       text-decoration: underline;
     }
+    #logoutBtn {
+      float: right;
+      background: #002200cc;
+      border: 2px solid #00ff44;
+      padding: 7px 12px;
+      color: #00ff44;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: 'Share Tech Mono', monospace;
+      font-weight: 700;
+      user-select: none;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    #logoutBtn:hover {
+      background: #005500dd;
+      box-shadow: 0 0 20px #00ff44aa;
+    }
     form {
       display: flex;
       flex-direction: column;
       gap: 16px;
-      max-width: 420px;
-      margin: 0 auto 32px auto;
+      max-width: 480px;
+      margin: 0 auto 36px auto;
     }
     input[type="text"], textarea {
       background: rgba(0, 20, 0, 0.9);
@@ -74,13 +91,14 @@
       cursor: pointer;
       box-shadow: 0 0 20px #00ff44, 0 0 50px #00ff4488;
       transition: background 0.3s, box-shadow 0.3s;
+      user-select: none;
     }
     button:hover {
       background: linear-gradient(90deg, #aaff44, #44aa00);
       box-shadow: 0 0 38px #aaff44, 0 0 70px #44aa0066;
     }
     #projectsList {
-      max-width: 540px;
+      max-width: 520px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -90,7 +108,7 @@
       background: rgba(0, 40, 0, 0.9);
       border-radius: 16px;
       border: 2.5px solid #00ff44;
-      padding: 18px 22px;
+      padding: 16px 20px;
       color: #bbffbb;
       box-shadow: 0 0 14px #22ee44;
       user-select: none;
@@ -111,17 +129,18 @@
       background: transparent;
       border: none;
       color: #ff4444;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       cursor: pointer;
       transition: color 0.3s;
       padding: 0 6px;
       user-select: none;
+      line-height: 1;
     }
     .delete-btn:hover {
       color: #ff0000;
     }
     #statusMessage {
-      max-width: 540px;
+      max-width: 520px;
       margin: 0 auto 12px auto;
       height: 1.2em;
       text-align: center;
@@ -143,6 +162,7 @@
 <body>
 
   <a href="bunker.html" class="back-link">&larr; Back to Bunker</a>
+  <button id="logoutBtn" title="Logout">Logout</button>
 
   <h1>Projects</h1>
 
@@ -161,7 +181,6 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
   <script>
-    // Replace with your Firebase config values
     const firebaseConfig = {
       apiKey: "AIzaSyDhVEriajG4wXV7nr5v7eQMM-C5QPy7e0A",
       authDomain: "savine-2898.firebaseapp.com",
@@ -179,6 +198,7 @@
     const projectDescriptionInput = document.getElementById('projectDescription');
     const projectsList = document.getElementById('projectsList');
     const statusMessage = document.getElementById('statusMessage');
+    const logoutBtn = document.getElementById('logoutBtn');
 
     let currentUser = null;
 
@@ -189,6 +209,10 @@
       } else {
         window.location.href = 'login.html';
       }
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      auth.signOut().then(() => window.location.href = 'login.html');
     });
 
     addProjectForm.addEventListener('submit', async e => {
@@ -211,6 +235,7 @@
         projectNameInput.value = "";
         projectDescriptionInput.value = "";
         statusMessage.textContent = "Project added!";
+        loadProjects();
       } catch (error) {
         alert("Error adding project: " + error.message);
         statusMessage.textContent = "";
@@ -238,6 +263,7 @@
           try {
             await db.collection('projects').doc(doc.id).delete();
             statusMessage.textContent = `Project "${data.name}" deleted.`;
+            loadProjects();
           } catch (error) {
             alert("Error deleting project: " + error.message);
           }
@@ -278,7 +304,7 @@
       }
     }
 
-    // Utility to escape HTML
+    // Utility to escape HTML for safety
     function escapeHtml(text) {
       return text.replace(/[&<>"']/g, function(m) {
         switch (m) {
@@ -291,9 +317,6 @@
         }
       });
     }
-
   </script>
-
 </body>
 </html>
-
