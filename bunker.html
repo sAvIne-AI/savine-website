@@ -1,160 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>🦇 SAVINE Bunker — Dashboard</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>🦇 SAVINE Bunker — Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
 
-    html, body {
-      margin:0; padding:0;
-      height: 100%;
-      background: linear-gradient(135deg, #00010a, #001522);
-      font-family: 'Share Tech Mono', monospace;
-      color: #00fff7;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-    }
+  html, body {
+    margin: 0; padding: 0;
+    height: 100%;
+    background: #01020f;
+    font-family: 'Orbitron', monospace;
+    color: #0ff;
+    user-select: none;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-    /* Horizontal scan lines overlay */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(0,255,255,0.06),
-        rgba(0,255,255,0.06) 3px,
-        transparent 3px,
-        transparent 6px
-      );
-      animation: scanLinesHorizontal 5s linear infinite;
-      pointer-events: none;
-      z-index: 0;
-    }
+  /* Background grid */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      linear-gradient(0deg, rgba(0,255,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,255,0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+    pointer-events: none;
+  }
 
-    @keyframes scanLinesHorizontal {
-      0% { background-position: 0 0; }
-      100% { background-position: 0 20px; }
-    }
+  header {
+    width: 100%;
+    padding: 20px 40px;
+    font-size: 2.5rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #0ff;
+    text-shadow:
+      0 0 10px #0ff,
+      0 0 30px #0ff;
+    border-bottom: 1px solid #004444;
+    box-shadow: inset 0 -1px 5px #001111;
+    user-select: none;
+    position: relative;
+    z-index: 2;
+  }
 
-    header {
-      width: 100%;
-      padding: 20px 40px;
-      font-size: 2rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      text-shadow: 0 0 8px #00fff7;
-      box-shadow:
-        0 0 15px rgba(0,255,255,0.3);
-      user-select: none;
-      position: relative;
-      z-index: 1;
-    }
+  main {
+    width: 90vw;
+    max-width: 1200px;
+    padding: 40px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+    gap: 32px;
+    z-index: 2;
+  }
 
+  .card {
+    background: #002233;
+    border-radius: 18px;
+    padding: 30px;
+    box-shadow:
+      0 0 30px #00ffffcc,
+      inset 0 0 40px #007777aa;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover {
+    transform: scale(1.08);
+    box-shadow:
+      0 0 60px #00ffff,
+      inset 0 0 70px #00ffffcc;
+  }
+  .card h2 {
+    font-size: 1.9rem;
+    margin: 0 0 15px;
+    letter-spacing: 0.1em;
+    color: #00ffff;
+    text-shadow: 0 0 15px #00ffff;
+  }
+  .card p {
+    font-size: 1.15rem;
+    line-height: 1.5;
+    color: #99ffffee;
+  }
+
+  footer {
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #006666;
+    user-select: none;
+    background: #002233;
+    box-shadow: inset 0 1px 5px #005050;
+    letter-spacing: 0.1em;
+    position: relative;
+    z-index: 2;
+  }
+
+  @media (max-width: 600px) {
     main {
-      flex: 1;
-      width: 90vw;
-      max-width: 1200px;
-      padding: 40px 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
-      gap: 24px;
-      z-index: 1;
+      grid-template-columns: 1fr;
     }
-
-    .card {
-      background: #001e22;
-      border-radius: 12px;
-      padding: 25px 20px;
-      box-shadow:
-        0 0 20px #00fff7a0,
-        inset 0 0 20px #005555AA;
-      cursor: pointer;
-      user-select: none;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
-
-    /* Removed the .card::before circular background */
-
-    .card:hover {
-      box-shadow:
-        0 0 40px #00ffe8,
-        inset 0 0 40px #00ffe8;
-      transform: scale(1.05);
-      background: #003739;
-      z-index: 10;
-    }
-
-    .card h2 {
-      margin: 0 0 15px 0;
-      font-size: 1.7rem;
-      letter-spacing: 0.1em;
-      color: #00fff7;
-      text-shadow: 0 0 10px #00fff7;
-      position: relative;
-      z-index: 1;
-    }
-
-    .card p {
-      font-size: 1.1rem;
-      line-height: 1.4;
-      color: #00d1b8;
-      position: relative;
-      z-index: 1;
-    }
-
-    footer {
-      width: 100%;
-      padding: 15px 0;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #005050;
-      user-select: none;
-      background: #001118;
-      box-shadow: inset 0 1px 5px #004040;
-      letter-spacing: 0.1em;
-      position: relative;
-      z-index: 1;
-    }
-
-    @media (max-width: 600px) {
-      main {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
-  <header>🦇 SAVINE BUNKER</header>
+<header>🦇 SAVINE BUNKER</header>
 
-  <main>
-    <div class="card" tabindex="0" role="button" aria-pressed="false">
-      <h2>Projects</h2>
-      <p>Manage your secret tech projects and missions.</p>
-    </div>
-    <div class="card" tabindex="0" role="button" aria-pressed="false">
-      <h2>Tools</h2>
-      <p>Access your exclusive digital tools and scripts.</p>
-    </div>
-    <div class="card" tabindex="0" role="button" aria-pressed="false">
-      <h2>Private AI</h2>
-      <p>Interact with your AI assistant and chatbot.</p>
-    </div>
-    <div class="card" tabindex="0" role="button" aria-pressed="false">
-      <h2>Settings</h2>
-      <p>Configure your underground system preferences.</p>
-    </div>
-  </main>
+<main>
+  <div class="card" tabindex="0" role="button" aria-pressed="false">
+    <h2>Projects</h2>
+    <p>Manage your secret tech projects and missions.</p>
+  </div>
+  <div class="card" tabindex="0" role="button" aria-pressed="false">
+    <h2>Tools</h2>
+    <p>Access your exclusive digital tools and scripts.</p>
+  </div>
+  <div class="card" tabindex="0" role="button" aria-pressed="false">
+    <h2>Private AI</h2>
+    <p>Interact with your AI assistant and chatbot.</p>
+  </div>
+  <div class="card" tabindex="0" role="button" aria-pressed="false">
+    <h2>Settings</h2>
+    <p>Configure your underground system preferences.</p>
+  </div>
+</main>
 
-  <footer>© 2025 Savine - The Underground Tech Hub</footer>
+<footer© 2022-2025 Savine - The Underground Tech Hub</footer>
 
 </body>
 </html>
