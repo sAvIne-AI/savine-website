@@ -1,145 +1,137 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Savine Login - Hacker Vibes</title>
+  <title>Savine Login - Hacker Console</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
-
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
     html, body {
       margin: 0; padding: 0;
-      height: 100%;
-      background: linear-gradient(135deg, #000000, #01111a);
-      font-family: 'Orbitron', monospace;
-      color: #00ffff;
+      height: 100vh;
+      background: #000 url('https://www.transparenttextures.com/patterns/dark-mosaic.png') repeat;
+      font-family: 'Share Tech Mono', monospace;
+      color: #00FF00;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow: hidden;
       position: relative;
     }
-
-    /* Matrix style vertical lines */
+    /* Matrix-style vertical lines overlay */
     body::before {
       content: "";
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: repeating-linear-gradient(
         90deg,
-        rgba(0,255,255,0.05),
-        rgba(0,255,255,0.05) 1px,
+        rgba(0,255,0,0.05),
+        rgba(0,255,0,0.05) 1px,
         transparent 1px,
         transparent 2px
       );
       z-index: 0;
       pointer-events: none;
     }
-
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 2rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      text-shadow:
-        0 0 8px #00fff7,
-        0 0 25px #00fff7,
-        0 0 40px #00fff7;
-      animation: flicker 3s infinite ease-in-out;
-      position: relative;
-      z-index: 1;
-      user-select: none;
-    }
-
-    @keyframes flicker {
-      0%, 100% {
-        opacity: 1;
-      }
-      50% {
-        opacity: 0.6;
-      }
-    }
-
-    form {
-      background: rgba(0,255,255,0.06);
-      box-shadow: 0 0 20px #00fff7;
-      border-radius: 25px;
-      border: 1.5px solid #00fff7;
-      backdrop-filter: blur(10px);
-      padding: 30px 40px;
+    .login-panel {
+      z-index: 2;
+      background: rgba(0,0,0,0.95);
+      border: 2px solid #00FF00;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #00FF00AA;
+      padding: 40px 50px;
+      width: 360px;
       display: flex;
       flex-direction: column;
-      width: 340px;
-      z-index: 1;
+      user-select: none;
     }
-
-    input[type="email"], input[type="password"] {
-      background: transparent;
-      border: 2px solid #00fff7;
-      border-radius: 12px;
-      padding: 14px 20px;
-      margin-bottom: 20px;
-      font-family: 'Orbitron', monospace;
-      font-size: 1.1rem;
-      color: #00fff7;
-      outline: none;
-      transition: box-shadow 0.3s ease, border-color 0.3s ease;
-    }
-    input[type="email"]:focus, input[type="password"]:focus {
-      border-color: #ff00de;
-      box-shadow: 0 0 20px #ff00de;
-    }
-
-    button {
-      background-image: linear-gradient(90deg, #00fff7, #006bb3);
-      border: none;
-      color: #002933;
+    .panel-header {
+      font-size: 1.3rem;
       font-weight: 700;
-      font-size: 1.2rem;
-      padding: 16px;
-      border-radius: 50px;
+      letter-spacing: 0.1em;
+      color: #00FF00;
+      border-bottom: 2px solid #00FF00;
+      padding-bottom: 12px;
+      margin-bottom: 22px;
+      font-family: 'Share Tech Mono', monospace;
+    }
+    h1 {
+      margin: 0 0 24px 0;
+      font-size: 2.6rem;
+      text-align: center;
+      color: #00FF00;
+      letter-spacing: 0.15em;
+      text-shadow: 0 0 12px #00FF00,0 0 25px #00FF00;
+      font-family: 'Share Tech Mono', monospace;
+    }
+    input {
+      background: transparent;
+      border: 2px solid #00FF00;
+      border-radius: 14px;
+      padding: 14px 18px;
+      margin-bottom: 22px;
+      font-family: 'Share Tech Mono', monospace;
+      color: #00FF00;
+      font-size: 1.05rem;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    input:focus {
+      border-color: #55FF55;
+      box-shadow: 0 0 20px #55FF55;
+    }
+    button {
+      font-family: 'Share Tech Mono', monospace;
+      background-color: #00FF00;
+      border: none;
+      border-radius: 30px;
+      color: #001100;
+      font-weight: 700;
+      font-size: 1.3rem;
+      padding: 16px 0;
+      box-shadow: 0 0 35px #00FF00;
       cursor: pointer;
-      box-shadow:
-        0 0 20px #00fff7;
-      transition: all 0.3s ease;
+      transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
     }
     button:hover {
-      background-image: linear-gradient(90deg, #ff00de, #aa00ff);
-      color: white;
-      box-shadow: 0 0 50px #ff00de;
+      background-color: #002200;
+      color: #00FF00;
+      box-shadow: 0 0 65px #00FF00;
       transform: scale(1.05);
     }
-
     #userDetails {
-      color: #00ff94;
-      margin-top: 20px;
-      font-weight: 600;
-      user-select: none;
-      min-height: 1.6em;
       text-align: center;
-      z-index: 1;
+      margin-top: 18px;
+      color: #55FF55;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      min-height: 1.6em;
+      user-select: none;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1rem;
+      z-index: 2;
     }
   </style>
 </head>
 <body>
 
-  <h1>Savine Login</h1>
-
-  <form id="loginForm">
-    <input type="email" id="email" placeholder="Email" autocomplete="off" required />
-    <input type="password" id="password" placeholder="Password" autocomplete="off" required />
-    <button type="submit">Login / Sign Up</button>
-  </form>
-
-  <button id="logoutBtn" style="display:none; margin-top: 12px;">Logout</button>
-
-  <div id="userDetails"></div>
+  <div class="login-panel" role="main" aria-labelledby="loginTitle">
+    <div class="panel-header" id="loginTitle">Savine Login Console</div>
+    <h1>SAVINE</h1>
+    <form id="loginForm" novalidate>
+      <input type="email" id="email" name="email" placeholder="Email" autocomplete="off" required aria-required="true" />
+      <input type="password" id="password" name="password" placeholder="Password" autocomplete="off" required aria-required="true" />
+      <button type="submit" aria-label="Login or Sign up">Login / Sign Up</button>
+    </form>
+    <button id="logoutBtn" style="display:none; margin-top: 14px;" aria-label="Logout">Logout</button>
+    <div id="userDetails" role="alert" aria-live="polite"></div>
+  </div>
 
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
   <script>
-    // Replace this config with your Firebase project settings
+    // Replace these config values with your Firebase project's config
     const firebaseConfig = {
       apiKey: "AIzaSyDhVEriajG4wXV7nr5v7eQMM-C5QPy7e0A",
       authDomain: "savine-2898.firebaseapp.com",
@@ -148,7 +140,6 @@
       messagingSenderId: "366894135155",
       appId: "1:366894135155:web:6c38075a462bef99b13706"
     };
-
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
@@ -160,11 +151,11 @@
 
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const email = emailInput.value;
-      const password = passwordInput.value;
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
 
       if (!email || !password) {
-        alert('Please enter both email and password');
+        alert('Please enter both email and password.');
         return;
       }
 
