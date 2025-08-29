@@ -6,43 +6,49 @@
 <title>Savine Login - Hacker Tech Vibes</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
-  
-  body {
-    margin: 0;
-    height: 100vh;
-    background: linear-gradient(135deg, #000000, #01151a);
+
+  html, body {
+    margin: 0; padding: 0;
+    height: 100%;
+    background: linear-gradient(135deg, #000000, #01111a);
     font-family: 'Share Tech Mono', monospace;
-    color: #00ffea;
+    color: #00fff7;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    overflow: hidden;
     position: relative;
+    overflow: hidden;
   }
-  /* Digital scan lines overlay */
+
+  /* Vertical scan lines overlay */
   body::before {
     content: "";
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     background: repeating-linear-gradient(
-      0deg,
-      rgba(0,255,234,0.06),
-      rgba(0,255,234,0.06) 3px,
-      transparent 3px,
-      transparent 6px
+      90deg,
+      rgba(0,255,255,0.05),
+      rgba(0,255,255,0.05) 1px,
+      transparent 1px,
+      transparent 2px
     );
     z-index: 0;
     pointer-events: none;
   }
+
   h1 {
     font-size: 3rem;
-    text-transform: uppercase;
-    text-shadow: 0 0 8px #00fff7, 0 0 25px #00fff7, 0 0 40px #00fff7;
     margin-bottom: 2rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-shadow:
+      0 0 8px #00fff7,
+      0 0 25px #00fff7,
+      0 0 40px #00fff7;
     animation: glitch 3s infinite ease-in-out;
     position: relative;
     z-index: 1;
+    user-select: none;
   }
   @keyframes glitch {
     0%, 100% {
@@ -61,61 +67,64 @@
       text-shadow: -1px 1px #00fff7, 1px -1px #00fff7;
     }
   }
+
   form {
-    background: rgba(0, 255, 250, 0.05);
+    z-index: 1;
+    background: rgba(0,255,255,0.07);
+    box-shadow: 0 0 20px #00fff7;
+    border-radius: 25px;
     border: 1.5px solid #00fff7;
-    border-radius: 20px;
-    backdrop-filter: blur(15px);
-    box-shadow: 0 0 15px #00fff7;
+    backdrop-filter: blur(10px);
     padding: 30px 40px;
-    width: 320px;
     display: flex;
     flex-direction: column;
-    z-index: 1;
+    width: 320px;
   }
-  input[type="email"],
-  input[type="password"] {
+
+  input[type="email"], input[type="password"] {
     background: transparent;
-    border: 1.8px solid #00fff7;
-    border-radius: 10px;
-    padding: 15px 20px;
-    font-size: 1rem;
-    color: #00fff7;
+    border: 2px solid #00fff7;
+    border-radius: 12px;
+    padding: 14px 20px;
     margin-bottom: 20px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.1rem;
+    color: #00fff7;
     outline: none;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
   }
-  input[type="email"]:focus,
-  input[type="password"]:focus {
+  input[type="email"]:focus, input[type="password"]:focus {
     border-color: #ff00de;
-    box-shadow: 0 0 15px #ff00de;
+    box-shadow: 0 0 20px #ff00de;
   }
+
   button {
-    background: linear-gradient(90deg, #00fff7, #00afff);
+    background-image: linear-gradient(90deg, #00fff7, #006bb3);
     border: none;
-    padding: 15px;
+    color: #002933;
+    font-weight: 700;
     font-size: 1.2rem;
-    font-weight: bold;
-    color: #001a1a;
+    padding: 16px;
     border-radius: 50px;
     cursor: pointer;
-    box-shadow: 0 0 30px #00fff7;
+    box-shadow:
+      0 0 20px #00fff7;
     transition: all 0.3s ease;
   }
   button:hover {
-    background: linear-gradient(90deg, #ff00de, #aa00ff);
+    background-image: linear-gradient(90deg, #ff00de, #aa00ff);
     color: white;
     box-shadow: 0 0 50px #ff00de;
     transform: scale(1.05);
   }
+
   #userDetails {
-    margin-top: 20px;
-    font-size: 1.15rem;
+    color: #00ff94;
+    margin-top: 16px;
     font-weight: 700;
-    color: #00ffa7;
-    min-height: 1.8em;
-    text-align: center;
     user-select: none;
+    min-height: 1.6em;
+    text-align: center;
   }
 </style>
 </head>
@@ -129,7 +138,7 @@
     <button type="submit">Login / Sign Up</button>
   </form>
 
-  <button id="logoutBtn" style="display:none; margin-top: 15px;">Logout</button>
+  <button id="logoutBtn" style="display:none; margin-top: 12px;">Logout</button>
 
   <div id="userDetails"></div>
 
@@ -145,7 +154,6 @@
      messagingSenderId: "366894135155",
      appId: "1:366894135155:web:6c38075a462bef99b13706"
     };
-
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
