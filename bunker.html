@@ -3,85 +3,236 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>🦇 SAVINE Bunker Dashboard</title>
+  <title>🦇 SAVINE Bunker — Animated Dashboard</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
-    body, html {
+    html, body {
       margin: 0; padding: 0; height: 100%;
       font-family: 'Share Tech Mono', monospace;
       background: #000 url('https://www.transparenttextures.com/patterns/dark-mosaic.png') repeat;
       color: #00FF00;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       overflow-x: hidden;
     }
-    .vertical-stack {
-      margin-top: 10vh;
-      display: flex; flex-direction: column; gap: 26px; align-items: center;
+    /* Background subtle grid */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        linear-gradient(0deg, rgba(0,255,0,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,0,0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 0;
+      pointer-events: none;
     }
-    .bunker-panel {
-      width: 97vw; max-width: 480px;
-      background: rgba(0,0,0,0.92);
-      border: 2px solid #00FF00;
-      border-radius: 6px;
-      box-shadow: 0 0 24px #00FF0050;
-      padding: 28px 34px 22px 34px;
-      position: relative;
-      min-height: 100px;
-    }
-    .panel-header {
-      background: #00FF00;
-      color: #000;
-      font-family: inherit;
-      letter-spacing: .06em;
-      font-size: 1.1rem;
-      border-radius: 3px 3px 0 0;
-      padding: 10px 18px 7px 18px;
-      margin: -28px -34px 12px -34px;
-      box-shadow: 0 2px 6px #00FF0020;
-    }
-    h2 {
-      font-size: 1.35rem;
+
+    header {
+      width: 100%;
+      padding: 22px 40px;
+      font-size: 2.5rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
       color: #00FF00;
-      letter-spacing: 0.05em;
-      margin-bottom: 6px;
+      text-shadow:
+        0 0 10px #00FF00,
+        0 0 30px #00FF00;
+      border-bottom: 1px solid #004400;
+      box-shadow: inset 0 -1px 5px #001100;
+      user-select: none;
+      position: relative;
+      z-index: 10;
     }
-    p {
-      font-size: 1rem;
-      color: #0f8;
+    main {
+      width: 90vw;
+      max-width: 540px;
+      padding: 40px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      z-index: 10;
+    }
+
+    .card {
+      background: rgba(0, 51, 51, 0.8);
+      border-radius: 18px;
+      padding: 28px 24px;
+      box-shadow:
+        0 0 33px #00ff00cc,
+        inset 0 0 46px #007f7fbb;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid transparent;
+      display: flex;
+      gap: 22px;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow:
+        0 0 70px #00ff00ee,
+        inset 0 0 75px #00ff00ff;
+      border-color: #00ff00;
+      transform: scale(1.05);
+      z-index: 100;
+    }
+
+    .card h2 {
+      font-size: 2.0rem;
+      letter-spacing: 0.15em;
+      color: #00FF00;
+      text-shadow: 0 0 18px #00ff00;
       margin: 0;
-      opacity: 0.92;
-      letter-spacing: 0.03em;
+      user-select: none;
+      flex: 1;
     }
-    .bunker-panel:hover {
-      box-shadow: 0 0 48px #00FF0070;
-      border-color: #0f8;
-      background: #002702;
-      transform: scale(1.01);
-      transition: all .13s;
+
+    .card p {
+      font-size: 1.15rem;
+      line-height: 1.5;
+      color: #99ff99cc;
+      user-select: none;
+      flex: 2;
+    }
+    /* Icons container */
+    .icon-container {
+      flex: 0 0 70px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    /* Desktop animation */
+    .desktop-svg {
+      width: 60px; height: 38px;
+      filter: drop-shadow(0 0 8px #00ff00) drop-shadow(0 0 30px #00ff00);
+      animation: pulseGlow 3.6s ease-in-out infinite alternate;
+    }
+    /* Tools background */
+    .tools-bg {
+      position: absolute;
+      top: 10px; left: 10px; right: 0; bottom: 10px;
+      background-image: url('https://svgshare.com/i/rAV.svg'); /* gear or circuit background svg */
+      background-repeat: repeat;
+      opacity: 0.1;
+      pointer-events: none;
+      animation: slowRotate 30s linear infinite;
+      border-radius: 18px;
+      z-index: 0;
+    }
+    /* Assistant popup animation */
+    .assistant-popup {
+      width: 60px;
+      aspect-ratio: 1/1;
+      background: radial-gradient(circle, #00ff00 30%, transparent 70%);
+      border-radius: 50%;
+      box-shadow:
+        0 0 15px #0f0,
+        0 0 30px #0f0;
+      position: relative;
+      animation: floatUpDown 4.5s ease-in-out infinite alternate;
+    }
+    .assistant-popup::before {
+      content: 'AI';
+      color: #000;
+      font-weight: 700;
+      font-family: 'Share Tech Mono', monospace;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.2rem;
+      user-select: none;
+    }
+    /* Settings gear icon */
+    .gear-icon {
+      width: 68px;
+      height: 68px;
+      filter: drop-shadow(0 0 8px #00ff00) drop-shadow(0 0 20px #00ff00);
+      animation: rotateGear 15s linear infinite;
+      user-select: none;
+    }
+
+    @keyframes pulseGlow {
+      from {
+        filter: drop-shadow(0 0 10px #00ff00) drop-shadow(0 0 26px #00ff00);
+        opacity: 0.7;
+      }
+      to {
+        filter: drop-shadow(0 0 25px #0f0) drop-shadow(0 0 50px #00ff00cc);
+        opacity: 1;
+      }
+    }
+    @keyframes slowRotate {
+      from { background-position: 0 0; }
+      to { background-position: 500px 500px; }
+    }
+    @keyframes floatUpDown {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-18px); }
+    }
+    @keyframes rotateGear {
+      0% { transform: rotate(0deg) }
+      100% { transform: rotate(360deg) }
     }
   </style>
 </head>
 <body>
-  <div class="vertical-stack">
-    <div class="bunker-panel">
-      <div class="panel-header">Projects</div>
-      <h2>Projects</h2>
-      <p>Manage your secret tech projects and missions.</p>
+  <header>🦇 SAVINE BUNKER</header>
+  <main>
+    <div class="card" tabindex="0" role="button" aria-pressed="false" aria-label="Projects">
+      <div class="icon-container">
+        <svg class="desktop-svg" viewBox="0 0 80 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none" stroke="#00ff00" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+          <rect x="7" y="7" width="66" height="34" rx="6"/>
+          <rect x="23" y="44" width="34" height="6" rx="3" fill="#00ff00" fill-opacity="0.18" stroke="none"/>
+          <line x1="11" y1="12" x2="69" y2="12"/>
+        </svg>
+      </div>
+      <div style="position:relative; flex:1;overflow:hidden;">
+        <h2>Projects</h2>
+        <p>Manage your secret tech projects and missions.</p>
+      </div>
     </div>
-    <div class="bunker-panel">
-      <div class="panel-header">Tools</div>
-      <h2>Tools</h2>
-      <p>Access your exclusive digital tools and scripts.</p>
+
+    <div class="card" tabindex="0" role="button" aria-pressed="false" aria-label="Tools" style="position:relative;">
+      <div class="tools-bg"></div>
+      <div class="icon-container">
+        <svg class="gear-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none" stroke="#00ff00" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+          <circle cx="32" cy="32" r="14"/>
+          <path d="M32 12v8M32 44v8M12 32h8M44 32h8M19.8 19.8l5.7 5.7M38.5 38.5l5.7 5.7M19.8 44.2l5.7-5.7M38.5 25.5l5.7-5.7"/>
+        </svg>
+      </div>
+      <div style="position:relative; flex:1;overflow:hidden;">
+        <h2>Tools</h2>
+        <p>Access your exclusive digital tools and scripts.</p>
+      </div>
     </div>
-    <div class="bunker-panel">
-      <div class="panel-header">Private AI</div>
-      <h2>Private AI</h2>
-      <p>Interact with your AI assistant and chatbot.</p>
+
+    <div class="card" tabindex="0" role="button" aria-pressed="false" aria-label="Private AI">
+      <div class="icon-container">
+        <div class="assistant-popup" aria-hidden="true"></div>
+      </div>
+      <div style="position:relative; flex:1;overflow:hidden;">
+        <h2>Private AI</h2>
+        <p>Interact with your AI assistant and chatbot.</p>
+      </div>
     </div>
-    <div class="bunker-panel">
-      <div class="panel-header">Settings</div>
-      <h2>Settings</h2>
-      <p>Configure your underground system preferences.</p>
+
+    <div class="card" tabindex="0" role="button" aria-pressed="false" aria-label="Settings">
+      <div class="icon-container">
+        <svg class="gear-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none" stroke="#00ff00" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+          <circle cx="32" cy="32" r="14"/>
+          <path d="M32 12v8M32 44v8M12 32h8M44 32h8M19.8 19.8l5.7 5.7M38.5 38.5l5.7 5.7M19.8 44.2l5.7-5.7M38.5 25.5l5.7-5.7"/>
+        </svg>
+      </div>
+      <div style="position:relative; flex:1;overflow:hidden;">
+        <h2>Settings</h2>
+        <p>Configure your underground system preferences.</p>
+      </div>
     </div>
-  </div>
+  </main>
 </body>
 </html>
