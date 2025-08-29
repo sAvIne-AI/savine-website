@@ -2,89 +2,199 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sanskrit Falling Lines Animation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SAVINE Portal</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
     body, html {
-      margin: 0; padding: 0; overflow: hidden;
-      background: black;
-      height: 100vh;
-      display: flex; justify-content: center; align-items: center;
+      margin: 0; padding: 0; height: 100vh;
+      min-height: 100vh;
+      background: #000;
+      font-family: 'Share Tech Mono', monospace;
+      overflow: hidden;
     }
-    canvas {
-      display: block;
-      background: black;
+    /* Matrix background canvas */
+    #matrix-bg {
+      position: fixed; top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 0;
+      background: #000;
+      pointer-events: none;
+    }
+    /* Globe watermark */
+    .globe-bg {
+      position: fixed; left: 50%; top: 56%;
+      transform: translate(-50%, -50%);
+      width: 60vw; max-width: 750px;
+      min-width: 280px;
+      opacity: 0.11;
+      z-index: 1;
+      pointer-events: none;
+      filter: drop-shadow(0 0 10px #00ff00) blur(0.5px);
+      user-select: none;
+      transition: 0.3s;
+    }
+    /* Desktop/Terminal monitor outline */
+    .desktop-bg {
+      position: fixed; left: 50%; top: 76%;
+      transform: translate(-50%, 0);
+      width: 44vw; max-width: 470px; min-width: 180px;
+      z-index: 2;
+      opacity: 0.17;
       filter: drop-shadow(0 0 8px #00ff00);
+      pointer-events: none;
+      user-select: none;
+    }
+    .console-win {
+      margin: 6vh auto 0 auto;
+      width: 76vw; max-width: 850px;
+      min-width: 320px;
+      background: #040404;
+      border: 3px solid #00FF00;
+      border-radius: 18px;
+      box-shadow: 0 0 40px #00FF0040, 0 0 1px #00FF00;
+      position: relative;
+      z-index: 10;
+    }
+    .console-header {
+      background: #00FF00;
+      color: #020;
+      font-size: 1.4rem;
+      padding: 0.6em 1.4em;
+      border-radius: 13px 13px 0 0;
+      letter-spacing: .08em;
+      font-weight: 600;
+      text-shadow: 0 0 2px #0009;
+      font-family: inherit;
+    }
+    .console-main {
+      padding: 3vh 0 4vh 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.2em;
+    }
+    .bat-big {
+      width: 95px; height: 54px;
+      margin-bottom: 10px;
+      display: block;
+      filter: drop-shadow(0 0 10px #0f0)
+              drop-shadow(0 0 23px #3fd859);
+    }
+    .savine-title {
+      font-size: 3.7rem;
+      color: #00FF00;
+      font-weight: 700;
+      letter-spacing: 0.17em;
+      margin-bottom: 0.7em;
+      text-shadow:
+        0 0 16px #00FF00,
+        0 0 55px #00FF00AA,
+        0 0 120px #00ff679a;
+    }
+    .bunker-btn {
+      font-size: 1.45rem;
+      padding: 18px 55px;
+      border-radius: 8px;
+      background: #00FF00;
+      color: #060;
+      border: none;
+      box-shadow: 0 0 32px #00FF00, 0 0 8px #fff, 0 0 70px #00FF00AA;
+      font-family: 'Share Tech Mono', monospace;
+      letter-spacing: 0.07em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.16s;
+      margin-top: 15px;
+    }
+    .bunker-btn:hover, .bunker-btn:focus {
+      color: #00FF00;
+      background: #111;
+      border: 2px solid #00FF00;
+      box-shadow: 0 0 52px #0f8, 0 0 110px #00FF00;
+      transform: scale(1.06);
+      outline: none;
+    }
+    @media (max-width: 600px) {
+      .console-win { width: 99vw; min-width: unset; }
+      .savine-title { font-size: 2.24rem; }
+      .console-main { gap: 1em; }
     }
   </style>
 </head>
 <body>
-  <canvas id="sanskritCanvas"></canvas>
+  <!-- Background animation canvas -->
+  <canvas id="matrix-bg"></canvas>
+
+  <!-- Globe SVG as watermark background -->
+  <svg class="globe-bg" viewBox="0 0 400 400" fill="none">
+    <circle cx="200" cy="200" r="190" stroke="#00FF00" stroke-width="5"/>
+    <ellipse cx="200" cy="200" rx="150" ry="60" stroke="#00FF00" stroke-width="3"/>
+    <ellipse cx="200" cy="200" rx="150" ry="180" stroke="#00FF00" stroke-width="2"/>
+    <!-- Longitude lines -->
+    <ellipse cx="200" cy="200" rx="80" ry="190" stroke="#00FF00" stroke-width="1.5"/>
+    <ellipse cx="200" cy="200" rx="40" ry="190" stroke="#00FF00" stroke-width="1"/>
+    <!-- Abstract continents (stylistic curves) -->
+    <path d="M110 150 Q140 120 190 120 Q260 130 240 190 Q200 250 170 230 Q130 210 110 150 Z" fill="#00FF0022" />
+    <path d="M250 270 Q280 230 330 250 Q350 320 260 330 Q230 312 250 270 Z" fill="#00FF0017" />
+    <!-- Bat in center! -->
+    <path d="M200,160
+      l-15,27 -20,2 10,8 -15,8 14,8 -11,8 13,6 14,28 14,-29 13,-4 -10,-8 13,-7 -12,-7 12,-9 -20,-2z"
+      fill="#00FF00" stroke="#00FF00" stroke-width="2" filter="url(#blur)" />
+    <filter id="blur">
+      <feGaussianBlur stdDeviation="2" />
+    </filter>
+  </svg>
+  <!-- Desktop monitor/terminal outline at bottom -->
+  <svg class="desktop-bg" viewBox="0 0 300 140" fill="none">
+    <rect x="10" y="20" width="280" height="90" rx="10" stroke="#00FF00" stroke-width="4" fill="none"/>
+    <rect x="110" y="112" width="80" height="9" fill="#00FF00" fill-opacity="0.11"/>
+    <rect x="130" y="122" width="40" height="10" rx="4" fill="#00FF00" fill-opacity="0.22"/>
+  </svg>
+
+  <!-- Main console with title, bat, and button -->
+  <div class="console-win">
+    <div class="console-header">Program Console</div>
+    <div class="console-main">
+      <svg class="bat-big" viewBox="0 0 64 32">
+        <path d="M32 8 L27 17 L17 18 L23 20 L15 22 L23 24 L17 26 L27 28 L32 32 L37 28 L47 26 L41 24 L49 22 L41 20 L47 18 L37 17 Z"
+              fill="#00ff00" stroke="#0f0" stroke-width="0.8" filter="url(#batglow)"/>
+        <filter id="batglow">
+          <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#00ff00"/>
+        </filter>
+      </svg>
+      <span class="savine-title">SAVINE</span>
+      <button class="bunker-btn" onclick="window.location='bunker.html'">Enter the Bunker</button>
+    </div>
+  </div>
   <script>
-    const canvas = document.getElementById('sanskritCanvas');
+    // Matrix code rain
+    const canvas = document.getElementById('matrix-bg');
     const ctx = canvas.getContext('2d');
-    let width, height;
-    
-    // Sanskrit characters (Devanagari block + some common letters/symbols)
-    const sanskritChars = "अआइईउऊऋऌएऐओऔकखगघङचछजझटठडढणतथदधनपफबभमयरलवशषसहॐ।॥";
-    
-    // Font size and columns setup
-    const fontSize = 18;
-    let columns;
-
-    // Array tracking y position of drops for each column
-    let drops = [];
-
-    // Initialize canvas size and drops
-    function init() {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-      columns = Math.floor(width / fontSize);
-      drops = [];
-      for (let i = 0; i < columns; i++) {
-        // Start each drop at a random negative offset (line appears from above)
-        drops[i] = Math.random() * -100;
+    let w = window.innerWidth, h = window.innerHeight;
+    canvas.width = w; canvas.height = h;
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789₿Ξ¥€₹¢$¥#%&@";
+    const fontSize = 22;
+    const columns = Math.floor(w / fontSize);
+    const drops = Array(columns).fill(1);
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0,0,0,0.17)";
+      ctx.fillRect(0, 0, w, h);
+      ctx.font = fontSize + "px 'Share Tech Mono', monospace";
+      ctx.fillStyle = "#00FF00";
+      for(let i = 0; i < drops.length; i++) {
+        const text = chars[ Math.floor(Math.random()*chars.length) ];
+        ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+        drops[i] = (drops[i] * fontSize > h && Math.random()>0.96) ? 0 : drops[i]+1;
       }
     }
-
-    // Drawing function run for each animation frame
-    function draw() {
-      // Semi-transparent black overlay for trail effect
-      ctx.fillStyle = "rgba(0, 0, 0, 0.14)";
-      ctx.fillRect(0, 0, width, height);
-
-      ctx.fillStyle = "#00ff00"; // Neon green color
-      ctx.font = fontSize + "px 'Noto Sans Devanagari', serif";
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = sanskritChars.charAt(Math.floor(Math.random() * sanskritChars.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        // Move drop down by fontSize + some random speed
-        drops[i] += 1 + Math.random() * 1.5;
-
-        // Reset drop above the screen randomly once it goes beyond
-        if (drops[i] * fontSize > height + fontSize) {
-          drops[i] = Math.random() * -50;
-        }
-      }
-    }
-
-    // Animation loop
-    function animate() {
-      draw();
-      requestAnimationFrame(animate);
-    }
-
-    window.addEventListener('resize', () => {
-      init();
-    });
-
-    // Initialize and start animation
-    init();
-    animate();
+    setInterval(drawMatrix, 60);
+    window.onresize = () => {
+      w = window.innerWidth; h = window.innerHeight;
+      canvas.width = w; canvas.height = h;
+    };
   </script>
 </body>
 </html>
