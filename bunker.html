@@ -49,6 +49,7 @@
       background: rgba(0,255,54,0.06);
       user-select: none;
       z-index: 1;
+      display: none;
     }
     main {
       display: flex;
@@ -61,6 +62,7 @@
       padding-bottom: 32px;
       margin-top: 18px;
       z-index: 2;
+      display: none;
     }
     .card {
       width: 90vw;
@@ -116,10 +118,25 @@
       .card { padding: 25px 3vw 25px 3vw; }
       header { font-size: 1.3rem; }
     }
+
+    #loadingMessage {
+      color: #00ff57;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.35rem;
+      letter-spacing: 0.1em;
+      margin: 22vh auto 0 auto;
+      text-align: center;
+      user-select: none;
+      z-index: 10;
+    }
   </style>
 </head>
 <body>
+
+  <div id="loadingMessage">Loading SAVINE Bunker...</div>
+
   <header>🦇 SAVINE BUNKER</header>
+
   <main>
     <div class="card" tabindex="0">
       <h2>Projects</h2>
@@ -138,5 +155,36 @@
       <p>Personalize your underground system with glowing precision.</p>
     </div>
   </main>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+  <script>
+    // Your Firebase config values here:
+    const firebaseConfig = {
+      apiKey: "AIzaSyDhVEriajG4wXV7nr5v7eQMM-C5QPy7e0A",
+      authDomain: "savine-2898.firebaseapp.com",
+      projectId: "savine-2898",
+      storageBucket: "savine-2898.firebasestorage.app",
+      messagingSenderId: "366894135155",
+      appId: "1:366894135155:web:6c38075a462bef99b13706"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    const bunkerContent = document.querySelector('main');
+    const pageHeader = document.querySelector('header');
+    const loadingMessage = document.getElementById('loadingMessage');
+
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        loadingMessage.style.display = 'none';
+        bunkerContent.style.display = 'flex';
+        pageHeader.style.display = 'block';
+      } else {
+        window.location.href = 'login.html';
+      }
+    });
+  </script>
 </body>
 </html>
