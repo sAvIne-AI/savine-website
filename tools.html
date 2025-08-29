@@ -1,1 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tools - SAVINE</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+    body {
+      background: #000;
+      color: #00ff44;
+      font-family: 'Share Tech Mono', monospace;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    h1 {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 18px;
+      text-shadow: 0 0 12px #00ff44, 0 0 40px #00ff44aa;
+      letter-spacing: 0.15em;
+      user-select: none;
+    }
+    a.back-link {
+      display: block;
+      margin-bottom: 30px;
+      color: #00ff44;
+      text-decoration: none;
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      user-select: none;
+    }
+    a.back-link:hover {
+      text-decoration: underline;
+    }
+    #toolsContainer {
+      max-width: 550px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .tool-item {
+      background: rgba(0, 40, 0, 0.9);
+      border-radius: 16px;
+      border: 2.5px solid #00ff44;
+      padding: 16px 20px;
+      user-select: none;
+      color: #b0ffb0;
+      font-family: 'Share Tech Mono', monospace;
+      box-shadow: 0 0 14px #22ee44;
+    }
+    #statusMessage {
+      max-width: 550px;
+      margin: 0 auto 20px auto;
+      height: 1.4em;
+      text-align: center;
+      font-weight: 700;
+      color: #77ff77;
+      user-select: none;
+    }
+    @media (max-width: 480px) {
+      #toolsContainer {
+        width: 90vw;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="bunker.html" class="back-link">&larr; Back to Bunker</a>
+
+  <h1>Tools</h1>
+
+  <div id="statusMessage"></div>
+  <div id="toolsContainer">
+    <div class="tool-item">Tool 1 Placeholder - Coming Soon</div>
+    <div class="tool-item">Tool 2 Placeholder - Coming Soon</div>
+    <div class="tool-item">Tool 3 Placeholder - Coming Soon</div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDhVEriajG4wXV7nr5v7eQMM-C5QPy7e0A",
+      authDomain: "savine-2898.firebaseapp.com",
+      projectId: "savine-2898",
+      storageBucket: "savine-2898.firebasestorage.app",
+      messagingSenderId: "366894135155",
+      appId: "1:366894135155:web:6c38075a462bef99b13706"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    auth.onAuthStateChanged(user => {
+      if (!user) {
+        window.location.href = "login.html";
+      }
+    });
+  </script>
+</body>
+</html>
 
