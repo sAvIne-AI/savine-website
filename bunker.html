@@ -12,13 +12,42 @@
       text-align: center;
       padding: 50px;
     }
+
     h1 {
       font-size: 3em;
+      color: #00ffcc;
       text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+      animation: glitch 1s infinite;
     }
-    p {
+
+    @keyframes glitch {
+      0% { text-shadow: 2px 2px red; }
+      20% { text-shadow: -2px -2px lime; }
+      40% { text-shadow: 2px -2px blue; }
+      60% { text-shadow: -2px 2px yellow; }
+      80% { text-shadow: 2px 2px purple; }
+      100% { text-shadow: 0 0 10px #00ffcc; }
+    }
+
+    .typing {
+      display: inline-block;
+      border-right: 2px solid #00ffcc;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: typing 5s steps(40, end), blink 0.7s step-end infinite;
       font-size: 1.2em;
+      margin-top: 20px;
     }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent }
+    }
+
     a {
       display: inline-block;
       margin-top: 30px;
@@ -38,8 +67,8 @@
 </head>
 <body>
   <h1>Welcome to the Bunker</h1>
-  <p>You’ve entered the underground tech hub. 🕶️</p>
-  <p>Here you’ll get secret updates, Savine Coins, and private AI tools.</p>
+  <p class="typing">You’ve entered the underground tech hub. 🕶️ Here you’ll get secret updates, Savine Coins, and private AI tools.</p>
+  <br>
   <a href="index.html">⬅ Back to Main Page</a>
 </body>
 </html>
