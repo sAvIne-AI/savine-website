@@ -3,22 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>🦇 SAVINE Bunker — Green Neon Dashboard</title>
+  <title>🦇 SAVINE Bunker — Dashboard</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
     html, body {
-      margin: 0;
-      padding: 0;
-      background: #010c01;
-      min-height: 100vh;
+      margin: 0; padding: 0; background: #010c01;
       font-family: 'Share Tech Mono', monospace;
-      color: #00ff57;
-      overflow-x: hidden;
+      color: #00ff57; overflow-x: hidden;
+      min-height: 100vh;
     }
     body::before {
       content: "";
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       background: repeating-linear-gradient(
         90deg,
         rgba(0,255,54,0.10) 0px,
@@ -26,109 +22,103 @@
         transparent 2px,
         transparent 10px
       );
-      z-index: 0;
-      pointer-events: none;
+      z-index: 0; pointer-events: none;
       animation: green-aura 8s linear infinite;
     }
-    @keyframes green-aura {
-      0% { background-position: 0 0; }
-      100% { background-position: 200px 0; }
-    }
+    @keyframes green-aura { 0% { background-position: 0 0; } 100% { background-position: 200px 0; } }
     header {
       width: 100%;
-      padding: 32px 0 26px 0;
+      padding: 32px 0 16px 0;
       text-align: center;
       font-size: 2.7rem;
       letter-spacing: 0.22em;
       color: #00ff57;
-      text-shadow:
-        0 0 14px #00ff57,
-        0 0 34px #00ff57;
-      font-family: 'Share Tech Mono', monospace;
+      text-shadow: 0 0 14px #00ff57, 0 0 34px #00ff57;
       background: rgba(0,255,54,0.06);
       user-select: none;
-      z-index: 1;
       display: none;
+      position: relative;
+      z-index: 2;
     }
     main {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      gap: 38px;
-      width: 100vw;
+      gap: 36px;
+      margin-top: 18px;
       min-height: 80vh;
       padding-bottom: 32px;
-      margin-top: 18px;
-      z-index: 2;
+      width: 100vw;
       display: none;
+      z-index: 2;
     }
     a.panel {
       text-decoration: none;
       cursor: pointer;
-      width: 90vw;
-      max-width: 490px;
+      width: 90vw; max-width: 480px;
       background: rgba(0,20,0,0.97);
       border-radius: 22px;
       border: 2.3px solid #39ff76;
-      box-shadow:
-        0 0 40px #00ff57,
-        0 0 9px #fff00017;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      box-shadow: 0 0 40px #00ff57, 0 0 9px #fff00017;
       padding: 44px 32px 32px 32px;
+      display: flex; flex-direction: column; align-items: center;
       gap: 10px;
-      transition: box-shadow 0.2s, transform 0.17s;
-      position: relative;
       color: #a4ffc9;
+      transition: box-shadow 0.3s, transform 0.2s;
     }
     a.panel:hover, a.panel:focus {
-      box-shadow: 0 0 80px #70ffad, 0 0 140px #00ff57bb;
-      transform: scale(1.015);
+      box-shadow: 0 0 90px #70ffad, 0 0 150px #00ff57bb;
+      transform: scale(1.05);
       border-color: #aaffc9;
       outline: none;
     }
     a.panel h2 {
-      font-size: 2.11rem;
-      margin-bottom: 9px;
-      margin-top: 0;
-      color: #a4ffc9;
-      text-shadow: 0 0 22px #00ff57, 0 0 60px #82ffd8;
-      letter-spacing: 0.14em;
-      font-family: inherit;
-      font-weight: 700;
-      text-align: center;
+      margin: 0 0 8px;
+      font-size: 2.1rem;
       user-select: none;
+      text-shadow: 0 0 22px #00ff57, 0 0 60px #82ffd8;
     }
     a.panel p {
-      font-size: 1.19rem;
-      color: #e5ffee;
-      letter-spacing: 0.045em;
-      text-align: center;
+      font-size: 1.18rem;
+      color: #d0ffd0cc;
       margin: 0;
+      user-select: none;
       text-shadow: 0 0 10px #36ff94a9;
+      text-align: center;
+    }
+    #logoutBtn {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      background: #002200cc;
+      border: 2px solid #00ff44;
+      padding: 10px 14px;
+      color: #00ff44;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: 'Share Tech Mono', monospace;
+      font-weight: 700;
+      user-select: none;
+      transition: background 0.3s, box-shadow 0.3s;
+      z-index: 99;
+      display: none;
+    }
+    #logoutBtn:hover {
+      background: #005500dd;
+      box-shadow: 0 0 25px #00ff44aa;
     }
     #loadingMessage {
-      color: #00ff57;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 1.35rem;
-      letter-spacing: 0.1em;
-      margin: 22vh auto 0 auto;
       text-align: center;
-      user-select: none;
-      z-index: 10;
+      margin-top: 25vh;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.4rem;
+      color: #00ff44;
+      letter-spacing: 0.08em;
     }
-    @media (max-width: 600px) {
-      main { gap: 22px; padding-left: 0; padding-right: 0; }
-      a.panel { padding: 35px 10vw 30px 10vw; }
-      a.panel h2 { font-size: 1.8rem; }
-      a.panel p { font-size: 1.05rem; }
-    }
-    @media (max-width: 400px) {
-      a.panel { padding: 25px 3vw 25px 3vw; }
-      header { font-size: 1.3rem; }
+    @media (max-width: 480px) {
+      a.panel {
+        padding: 28px 20px 28px 20px;
+      }
     }
   </style>
 </head>
@@ -136,12 +126,13 @@
 
   <div id="loadingMessage">Loading SAVINE Bunker...</div>
 
-  <header>🦇 SAVINE BUNKER</header>
+  <header>🦇 SAVINE Bunker</header>
+  <button id="logoutBtn" title="Logout">Logout</button>
 
   <main>
     <a href="projects.html" class="panel" tabindex="0" role="button" aria-label="Projects Section">
       <h2>Projects</h2>
-      <p>Manage your secret tech projects and missions in one seamless dashboard.</p>
+      <p>Manage your secret tech projects and missions seamlessly.</p>
     </a>
     <a href="tools.html" class="panel" tabindex="0" role="button" aria-label="Tools Section">
       <h2>Tools</h2>
@@ -149,7 +140,7 @@
     </a>
     <a href="private-ai.html" class="panel" tabindex="0" role="button" aria-label="Private AI Section">
       <h2>Private AI</h2>
-      <p>Talk to your personal AI assistant—always discreet, always green.</p>
+      <p>Interact with your personal AI assistant—always discreet, always green.</p>
     </a>
     <a href="settings.html" class="panel" tabindex="0" role="button" aria-label="Settings Section">
       <h2>Settings</h2>
@@ -172,18 +163,26 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    const bunkerContent = document.querySelector('main');
-    const pageHeader = document.querySelector('header');
     const loadingMessage = document.getElementById('loadingMessage');
+    const bunkerMain = document.querySelector('main');
+    const bunkerHeader = document.querySelector('header');
+    const logoutBtn = document.getElementById('logoutBtn');
 
     auth.onAuthStateChanged(user => {
       if (user) {
         loadingMessage.style.display = 'none';
-        bunkerContent.style.display = 'flex';
-        pageHeader.style.display = 'block';
+        bunkerMain.style.display = 'flex';
+        bunkerHeader.style.display = 'block';
+        logoutBtn.style.display = 'block';
       } else {
         window.location.href = 'login.html';
       }
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      auth.signOut().then(() => {
+        window.location.href = 'login.html';
+      });
     });
   </script>
 </body>
